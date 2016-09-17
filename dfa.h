@@ -28,7 +28,7 @@
 // Each state is a row in a transition table, and an `accepting' flag
 typedef struct {
     int transitions[DFA_NSYMBOLS];
-    int is_accepting = FALSE;
+    int is_accepting;
 } DFA_State;
 
 // A DFA is an array of States (size TBD) and the current state

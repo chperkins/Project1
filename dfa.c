@@ -1,7 +1,7 @@
 #ifndef _dfa_h
 #define _dfa_h
 
-#include <stdio.h> \
+#include <stdio.h> 
 #include <stdbool.h>
 #include "dfa.h"
 
@@ -11,6 +11,9 @@ DFA *DFA_new(int n) {
     dfa->nstates = n;
     dfa->current_state = 0;
     dfa->states = (DFA_State*)malloc(n*sizeof(DFA_State));  /* not sure about this statement. Trying to dynamically allocate space */
+    for (int i = 0; i < n; i++) {
+    	dfa->states[i].is_accepting = FALSE;
+    }
     return dfa;  
 }
 
@@ -33,6 +36,14 @@ void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst) {
 	}
 }
 
+int DFA_get_current_state(DFA *dfa) {
+    return dfa->current_state;
+}
+
+void DFA_set_current_state(DFA *dfa, int statenum) {
+    dfa->current_state = statenum;
+}
+
 int main (int argc, char **argv) {
 	DFA *trial  = DFA_new(3);
 	DFA_get_size(trial);
@@ -40,6 +51,8 @@ int main (int argc, char **argv) {
 	printf("%d \n", DFA_get_transition(trial, 0, 'a'));
 	DFA_set_transition_str(trial,0,"bc",2);
 	printf("%d \n", DFA_get_transition(trial, 0, 'b'));
+	DFA_set_current_state(trial,2);
+	printf("%d",DFA_get_current_state(trial));
 
 } /*synced up*/
 
