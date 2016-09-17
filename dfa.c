@@ -2,6 +2,7 @@
 #define _dfa_h
 
 #include <stdbool.h>
+#include "dfa.h"
 
 
 DFA *DFA_new(int n) {
@@ -23,5 +24,11 @@ int DFA_get_transition(DFA *dfa, int statenum, char symbol) {
 
 void DFA_set_transition(DFA *dfa, int src, char symbol, int dst) {
 	*dfa->(*(states + statenum))->transitions[symbol] = dst;
+}
+
+void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst) {
+	for(i=0; *(str + i) != '\0'; i++) {
+		*dfa->(*(states + statenum))->transitions[(*(str + i))] = dst;
+	}
 }
 
