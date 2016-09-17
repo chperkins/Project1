@@ -18,9 +18,10 @@ int DFA_get_size(DFA *dfa) {
 
 int DFA_get_transition(DFA *dfa, int statenum, char symbol) {
 	return *dfa->(*(states + statenum))->transitions[symbol];  /*don't know how to use pointers*/
+	/*states[statenum]*/
 }
 
 void DFA_set_transition(DFA *dfa, int src, char symbol, int dst) {
-
+	*dfa->(*(states + statenum))->transitions[symbol] = dst;
 }
 
