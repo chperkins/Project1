@@ -28,7 +28,7 @@ void DFA_set_transition(DFA *dfa, int src, char symbol, int dst) {
 
 void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst) {
 	for(int i=0; *(str + i) != '\0'; i++) {
-		dfa->(*(states + statenum))->transitions[(*(str + i))] = dst;
+	for(i=0; *(str + i) != '\0'; i++) {
 	}
 }
 
@@ -38,3 +38,4 @@ int main (int argc, char **argv) {
 	DFA_set_transition(trial,0,'a',1);
 	DFA_get_transition(trial, 0, 'a');
 }
+
