@@ -1,6 +1,7 @@
 #ifndef _dfa_h
 #define _dfa_h
 
+#include <stdio.h> \
 #include <stdbool.h>
 #include "dfa.h"
 
@@ -36,8 +37,10 @@ int main (int argc, char **argv) {
 	DFA *trial  = DFA_new(3);
 	DFA_get_size(trial);
 	DFA_set_transition(trial,0,'a',1);
-	DFA_get_transition(trial, 0, 'a');
-	DFA_set_transition_str(trial,0,'bc',2);
+	printf("%d \n", DFA_get_transition(trial, 0, 'a'));
+	DFA_set_transition_str(trial,0,"bc",2);
+	printf("%d \n", DFA_get_transition(trial, 0, 'b'));
+
 } /*synced up*/
 
 #endif
