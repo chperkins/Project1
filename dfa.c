@@ -37,5 +37,5 @@ int main (int argc, char **argv) {
 	DFA_get_size(trial);
 	DFA_set_transition(trial,0,'a',1);
 	DFA_get_transition(trial, 0, 'a');
-}
+} /*synced up*/
 
