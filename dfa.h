@@ -39,23 +39,24 @@ typedef struct {
 } DFA;
 
 extern DFA *DFA_new(int nstates);
-extern void DFA_free(DFA *dfa);
+
+extern void DFA_free(DFA *dfa); //do
 
 extern int DFA_get_size(DFA *dfa);
 
 extern int DFA_get_transition(DFA *dfa, int statenum, char symbol);
 extern void DFA_set_transition(DFA *dfa, int src, char symbol, int dst);
 extern void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst);
-extern void DFA_set_transition_all(DFA *dfa, int src, int dst);
 
+extern void DFA_set_transition_all(DFA *dfa, int src, int dst);//do
 extern int DFA_get_current_state(DFA *dfa);
-extern void DFA_set_current_state(DFA *dfa, int statenum);
-extern int DFA_get_accepting(DFA *dfa, int statenum);
-extern void DFA_set_accepting(DFA *dfa, int statenum, int value);
-extern int DFA_is_accepting(DFA *dfa);
+extern void DFA_set_current_state(DFA *dfa, int statenum);//do
+extern int DFA_get_accepting(DFA *dfa, int statenum);//do
+extern void DFA_set_accepting(DFA *dfa, int statenum, int value);//do
+extern int DFA_is_accepting(DFA *dfa);//do
 
-extern int DFA_execute(DFA *dfa, char *input);
+extern int DFA_execute(DFA *dfa, char *input);//do
 
-extern void DFA_print(DFA *dfa);
+extern void DFA_print(DFA *dfa);//do
 
 #endif
