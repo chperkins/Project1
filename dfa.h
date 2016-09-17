@@ -30,7 +30,7 @@ typedef struct {
     int transitions[DFA_NSYMBOLS];
     int is_accepting = FALSE;
     for(int i=0 i<=DFA_NSYMBOLS; i++) {
-    	transition[i] = DFA_NO_TRANSITION;
+    	transitions[i] = DFA_NO_TRANSITION;
     }
 } DFA_State;
 
