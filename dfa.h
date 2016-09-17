@@ -29,6 +29,9 @@
 typedef struct {
     int transitions[DFA_NSYMBOLS];
     int is_accepting = FALSE;
+    for(int i=0 i<=DFA_NSYMBOLS; i++) {
+    	transition[i] = DFA_NO_TRANSITION;
+    }
 } DFA_State;
 
 // A DFA is an array of States (size TBD) and the current state
