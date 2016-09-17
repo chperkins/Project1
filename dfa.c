@@ -14,6 +14,11 @@ DFA *DFA_new(int n) {
     for (int i = 0; i < n; i++) {
     	dfa->states[i].is_accepting = FALSE;
     }
+    for (int i=0; i<n; i++) {
+    	for(int j=0; j<DFA_NSYMBOLS; j++) {
+    		dfa->states[i].transitions[j]=DFA_NO_TRANSITION;
+    	}
+    }
     return dfa;  
 }
 
