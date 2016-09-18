@@ -70,9 +70,9 @@ void DFA_set_accepting(DFA *dfa, int statenum, int value) {
 
 int DFA_execute(DFA *dfa, char *input) {
 	for(int i=0; input[i] != '\0'; i++) {
-		dfa->current_state = dfa->states[current_state].transitions[input[i]];
-	}
-	return dfa->states[current_state].is_accepting;
+		dfa->current_state = dfa->states[dfa->current_state].transitions[input[i]];
+	} /* sets the current state to the transition of the previous state over and over*/
+	return dfa->states[dfa->current_state].is_accepting; /*returns accepting value of the final state*/
 }
 
 
