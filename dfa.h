@@ -54,7 +54,7 @@ extern int DFA_get_accepting(DFA *dfa, int statenum);
 extern void DFA_set_accepting(DFA *dfa, int statenum, int value);
 extern int DFA_is_accepting(DFA *dfa);
 
-extern int DFA_execute(DFA *dfa, char *input);//do
+extern int DFA_execute(DFA *dfa, char *input);
 
 extern void DFA_print(DFA *dfa);//do
 
