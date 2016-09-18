@@ -79,7 +79,6 @@ void DFA_free(DFA *dfa){
 }
 
 int DFA_execute(DFA *dfa, char *input) {
-	printf("%d", dfa->current_state);
 	for(int i=0; input[i] != '\0'; i++) {
 		int destination = dfa->states[dfa->current_state].transitions[input[i]];
 		DFA_set_current_state(dfa, destination);
@@ -87,13 +86,14 @@ int DFA_execute(DFA *dfa, char *input) {
 			return FALSE;
 		}
 	} /* sets the current state to the transition of the previous state over and over*/
-	printf("\n");
-	return DFA_get_accepting(dfa, dfa->current_state); /*returns accepting value of the final state*/
+	int final_state = dfa->current_state;
+	DFA_set_current_state(dfa, 0);
+	return DFA_get_accepting(dfa, final_state); /*returns accepting value of the final state*/
 }
 
 
 int main (int argc, char **argv) {
-	/*DFA *trial  = DFA_new(3);
+	DFA *trial  = DFA_new(3);
 	DFA_get_size(trial);
 	DFA_set_transition(trial,0,'a',1);
 	printf("%d \n", DFA_get_transition(trial, 0, 'a'));
@@ -105,7 +105,7 @@ int main (int argc, char **argv) {
 	DFA *problem_1 = DFA_new(3);
 	DFA_set_transition(problem_1, 0,'a', 1);
 	DFA_set_transition(problem_1, 1, 'b', 2);
-	DFA_set_accepting(problem_1, 2, TRUE);*/
+	DFA_set_accepting(problem_1, 2, TRUE);
 
 	DFA *problem_2 = DFA_new(3);
 	DFA_set_transition(problem_2, 0,'a', 1);
@@ -116,6 +116,13 @@ int main (int argc, char **argv) {
 	printf("%d \n", DFA_execute(problem_2, "abc"));
 	printf("%d \n", DFA_execute(problem_2, "xyz"));
 	printf("%d \n", DFA_execute(problem_2, "xyzab"));
+
+	DFA *problem_3 = DFA_new(2);
+	DFA_set_transition_all(problem_3, 0, 0);
+	DFA_set_transition_all(problem_3, 1, 1);
+	DFA_set_transition(problem_3, 0, '1', 1);
+	DFA_set_transition(problem_3, 1, '1', 0);
+	DFA
 
 } /*synced up*/
 
