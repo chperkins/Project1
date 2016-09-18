@@ -68,6 +68,12 @@ void DFA_set_accepting(DFA *dfa, int statenum, int value) {
 	dfa->states[statenum].is_accepting = value;
 }
 
+int DFA_execute(DFA *dfa, char *input) {
+	for(int i=0; input[i] != '\0'; i++) {
+		dfa->current_state = dfa->states[current_state].transitions[input[i]];
+	}
+	return dfa->states[current_state].is_accepting;
+}
 
 
 int main (int argc, char **argv) {
