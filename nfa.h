@@ -14,6 +14,13 @@
 // Assume input is 7-bit US-ASCII characters
 #define NFA_NSYMBOLS 128
 
+#ifndef TRUE
+# define TRUE 1
+#endif
+#ifndef FALSE
+# define FALSE 0
+#endif
+
 // Assume we start in state 0
 #define NFA_START_STATE 0
 
