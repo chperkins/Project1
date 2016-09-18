@@ -75,11 +75,27 @@ void DFA_set_accepting(DFA *dfa, int statenum, int value) {
 	dfa->states[statenum].is_accepting = value;
 }
 
+void DFA_free(DFA *dfa){
+
+	for(int i=0; i< DFA_get_size(dfa); i++){
+		DFA_State *state = &dfa->states[i];
+		free(state);
+	}
+
+	free(dfa);
+}
+
 int DFA_execute(DFA *dfa, char *input) {
 	for(int i=0; input[i] != '\0'; i++) {
-		dfa->current_state = dfa->states[dfa->current_state].transitions[input[i]];
+		int destination = dfa->states[dfa->current_state].transitions[input[i]];
+		DFA_set_current_state(dfa, destination);
+		if(dfa->current_state == -1) {
+			return FALSE;
+		}
 	} /* sets the current state to the transition of the previous state over and over*/
-	return dfa->states[dfa->current_state].is_accepting; /*returns accepting value of the final state*/
+	int final_state = dfa->current_state;
+	DFA_set_current_state(dfa, 0);
+	return DFA_get_accepting(dfa, final_state); /*returns accepting value of the final state*/
 }
 
 
@@ -91,8 +107,32 @@ int main (int argc, char **argv) {
 	DFA_set_transition_str(trial,0,"bc",2);
 	printf("%d \n", DFA_get_transition(trial, 0, 'b'));
 	DFA_set_current_state(trial,2);
+
 	printf("%d",DFA_get_current_state(trial));
     
+	printf("%d \n",DFA_get_current_state(trial));
+
+	DFA *problem_1 = DFA_new(3);
+	DFA_set_transition(problem_1, 0,'a', 1);
+	DFA_set_transition(problem_1, 1, 'b', 2);
+	DFA_set_accepting(problem_1, 2, TRUE);
+
+	DFA *problem_2 = DFA_new(3);
+	DFA_set_transition(problem_2, 0,'a', 1);
+	DFA_set_transition(problem_2, 1, 'b', 2);
+	DFA_set_transition_all(problem_2, 2, 2);
+	DFA_set_accepting(problem_2, 2, TRUE);
+	printf("%d \n", DFA_execute(problem_2, "ab"));
+	printf("%d \n", DFA_execute(problem_2, "abc"));
+	printf("%d \n", DFA_execute(problem_2, "xyz"));
+	printf("%d \n", DFA_execute(problem_2, "xyzab"));
+
+	DFA *problem_3 = DFA_new(2);
+	DFA_set_transition_all(problem_3, 0, 0);
+	DFA_set_transition_all(problem_3, 1, 1);
+	DFA_set_transition(problem_3, 0, '1', 1);
+	DFA_set_transition(problem_3, 1, '1', 0);
+
 } /*synced up*/
 
 #endif
