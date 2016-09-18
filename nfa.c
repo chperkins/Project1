@@ -12,7 +12,10 @@ NFA *NFA_new(int n) {
     IntSet *start = IntSet_New();
     IntSet_add(start, 0);
     nfa->current_states = start;
-    nfa->states = (NFA_State*)malloc(n*sizeof(NFA_State));  /* not sure about this statement. Trying to dynamically allocate space */
+    nfa->states = (NFA_State*)malloc(n*sizeof(NFA_State));
+    for(int i=0; i<n; i++) {
+        nfa->states[i].is_accepting = FALSE;
+    } /*initializes all accepting values as false*/
     return nfa;
 }
 
