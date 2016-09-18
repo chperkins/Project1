@@ -14,12 +14,12 @@ DFA *DFA_new(int n) {
     dfa->states = (DFA_State*)malloc(n*sizeof(DFA_State)); /*frees space for the states*/
     for(int i=0; i<n; i++) {
     	dfa->states[i].is_accepting = FALSE;
-    }
+    } /*initializes all accepting values as false*/
     for (int i=0; i<n; i++) {
     	for(int j=0; j<DFA_NSYMBOLS; j++) {
     		dfa->states[i].transitions[j]=DFA_NO_TRANSITION;
     	}
-    }
+    } /*makes default transitions as no transitions*/
     return dfa;  
 }
 
@@ -28,28 +28,33 @@ int DFA_get_size(DFA *dfa) {
 }
 
 int DFA_get_transition(DFA *dfa, int statenum, char symbol) {
-	return dfa->states[statenum].transitions[symbol];  /*don't know how to use pointers*/
-	/*states[statenum]*/
+	return dfa->states[statenum].transitions[symbol]; 
+	/*receives transition for the state[statenum] when we input symbol. Indexed by symbols*/
 }
 
 void DFA_set_transition(DFA *dfa, int src, char symbol, int dst) {
 	dfa->states[src].transitions[symbol] = dst;
+	/*sets the transitions for states[src] on symbol to be dst*/
 }
 
 void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst) {
 	for(int i=0; str[i] != '\0'; i++) {
 		dfa->states[src].transitions[str[i]] = dst;
 	}
+	/*sets transition for each member of the string*/
 }
 
 void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst) {
 	for(int i=0; i<DFA_NSYMBOLS; i++) {
 		dfa->states[src].transitions[i] = dst;
 	}
+
+	/*sets the same transition for all symbols*/
 }
 
 int DFA_get_current_state(DFA *dfa) {
     return dfa->current_state;
+}
 
 void DFA_set_current_state(DFA *dfa, int statenum) {
     dfa->current_state = statenum;
