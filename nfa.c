@@ -73,6 +73,7 @@ int main (int argc, char **argv) {
     NFA *test = NFA_new(5);
     NFA_add_transition(test, 0, 'a', 1);
     IntSet_print(NFA_get_transitions(test, 0, 'a'));
+    return 0;
 }
 
 
