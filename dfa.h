@@ -47,7 +47,6 @@ extern int DFA_get_size(DFA *dfa);
 extern int DFA_get_transition(DFA *dfa, int statenum, char symbol);
 extern void DFA_set_transition(DFA *dfa, int src, char symbol, int dst);
 extern void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst);
-
 extern void DFA_set_transition_all(DFA *dfa, int src, int dst);
 extern int DFA_get_current_state(DFA *dfa);
 extern void DFA_set_current_state(DFA *dfa, int statenum);

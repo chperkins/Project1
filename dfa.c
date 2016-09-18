@@ -44,7 +44,7 @@ void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst) {
 	/*sets transition for each member of the string*/
 }
 
-void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst) {
+void DFA_set_transition_all(DFA *dfa, int src, int dst) {
 	for(int i=0; i<DFA_NSYMBOLS; i++) {
 		dfa->states[src].transitions[i] = dst;
 	}
