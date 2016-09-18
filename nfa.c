@@ -10,7 +10,7 @@
 NFA *NFA_new(int n) {
     NFA *nfa = (NFA*)malloc(sizeof(NFA));
     nfa->nstates = n;
-    IntSet *start = IntSet_New();
+    IntSet *start = IntSet_new();
     IntSet_add(start, 0);
     nfa->current_states = start;
     nfa->states = (NFA_State*)malloc(n*sizeof(NFA_State));
@@ -53,7 +53,7 @@ void NFA_set_current_states(NFA *nfa, IntSet *states) {
 }
 
 void NFA_set_current_state(NFA *nfa, int state) {
-    IntSet *current = IntSet_New();
+    IntSet *current = IntSet_new();
     IntSet_add(current, state);
     nfa->current_states = current;
 }
