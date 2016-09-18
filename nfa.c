@@ -15,6 +15,9 @@ NFA *NFA_new(int n) {
     nfa->current_states = start;
     nfa->states = (NFA_State*)malloc(n*sizeof(NFA_State));
     for(int i=0; i<n; i++) {
+        for(int j=0; j<NFA_NSYMBOLS; j++) {
+            nfa->states[i].transitions[j] = IntSet_new();
+        }
         nfa->states[i].is_accepting = 0;
     } /*initializes all accepting values as false*/
     return nfa;
@@ -67,6 +70,9 @@ void NFA_set_accepting(NFA *nfa, int statenum, bool value) {
 }
 
 int main (int argc, char **argv) {
+    NFA *test = NFA_new(5);
+    NFA_add_transition(test, 0, 'a', 1);
+    IntSet_print(NFA_get_transitions(test, 0, 'a'));
 }
 
 
