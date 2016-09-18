@@ -68,6 +68,16 @@ void DFA_set_accepting(DFA *dfa, int statenum, int value) {
 	dfa->states[statenum].is_accepting = value;
 }
 
+void DFA_free(DFA *dfa){
+
+	for(int i=0; i< nstates; i++){
+		DFA_State *state = dfa->states[i];
+		free(state)
+	}
+
+	free(dfa);
+}
+
 int DFA_execute(DFA *dfa, char *input) {
 	printf("%d", dfa->current_state);
 	for(int i=0; input[i] != '\0'; i++) {
