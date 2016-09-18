@@ -1,7 +1,7 @@
 #ifndef _nfa_h
 #define _nfa_h
 
-#include <stdio.h> \
+#include <stdio.h> 
 #include <stdbool.h>
 #include "nfa.h"
 #include "IntSet.h"
