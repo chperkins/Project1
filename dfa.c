@@ -44,6 +44,24 @@ void DFA_set_current_state(DFA *dfa, int statenum) {
     dfa->current_state = statenum;
 }
 
+// int DFA_get_accepting(DFA *dfa, int statenum) {
+	
+// }
+
+void iterate_set_string (void arr[], int num, void x) {
+    for (int i = 0; i < num; i++) {
+    	arr[i] = x;
+    }
+}
+
+void iterate_get_string (void arr[], int num, void x) {
+    for (int i = 0; i < num; i++) {
+    	if (arr[i] == x) {
+    		return arr[i];
+    	} 
+    }
+    return ;
+}
 int main (int argc, char **argv) {
 	DFA *trial  = DFA_new(3);
 	DFA_get_size(trial);
