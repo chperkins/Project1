@@ -67,6 +67,7 @@ void NFA_set_accepting(NFA *nfa, int statenum, bool value) {
 }
 
 int main (int argc, char **argv) {
+    return 0;
 }
 
 
