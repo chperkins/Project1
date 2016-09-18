@@ -87,13 +87,16 @@ int main (int argc, char **argv) {
 	DFA_set_transition_str(trial,0,"bc",2);
 	printf("%d \n", DFA_get_transition(trial, 0, 'b'));
 	DFA_set_current_state(trial,2);
-	printf("%d",DFA_get_current_state(trial));
+	printf("%d \n",DFA_get_current_state(trial));
 
 	DFA *problem_1 = DFA_new(3);
-	DFA_set_transition(problem_1,'a', 1);
-	DFA_set_transition(problem_1, 'b', 2);
+	DFA_set_transition(problem_1, 0,'a', 1);
+	DFA_set_transition(problem_1, 1, 'b', 2);
 	DFA_set_accepting(problem_1, 2, TRUE);
-	DFA_execute(problem_1, "ab");
+	printf("%d \n", DFA_execute(problem_1, "ab"));
+	printf("%d \n", DFA_execute(problem_1, "abc"));
+	printf("%d \n", DFA_execute(problem_1, "xyz"));
+	printf("%d \n", DFA_execute(problem_1, "xyzab"));
 
 } /*synced up*/
 
