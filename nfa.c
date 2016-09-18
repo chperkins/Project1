@@ -70,22 +70,22 @@ bool NFA_execute(NFA *nfa, char *input) {
         /*set destination to be the set off all states we go to with input[i] from current states*/
         IntSet *destination = IntSet_New();
         /*we use current_s_iterator to iterate through each state in the current states*/
-        current_s_iterator = IntSet_iterator(dfa->current_states);
+        current_s_iterator = IntSet_iterator(nfa->current_states);
         while(IntSetIterator_has_next(current_s_iterator)) { /*this checks if theres another current state*/
             tempState = current_s_iterator->node->value; /*temp state is the current state to look at*/
-            IntSet_union(destination, dfa->states[tempState]->transitions[input[i]]); /*this adds all the transitions form tempstate give input to destination*/
+            IntSet_union(destination, nfa->states[tempState]->transitions[input[i]]); /*this adds all the transitions form tempstate give input to destination*/
             IntSetIterator_next(current_s_iterator); /*this iterates the while loop*/
         }
-        dfa->current_states = destination; /*this sets the current state to the set of destination states*/
+        nfa->current_states = destination; /*this sets the current state to the set of destination states*/
     } /*we run this over and over again for each input symbol*/
 
     /*now we have to find out whether we will accept or not*/
 
-    final_s_iterator = IntSet_iterator(dfa->current_states); /*create another iterator for the set of last states*/
+    final_s_iterator = IntSet_iterator(nfa->current_states); /*create another iterator for the set of last states*/
     while(IntSetIterator_has_next(final_s_iterator)) {
         tempState = final_s_iterator->node->value;
         /*if the current state is accepting, return true*/
-        if(dfa->states[tempState].is_accepting == TRUE) {
+        if(nfa->states[tempState].is_accepting == TRUE) {
             return TRUE
         }
     }
