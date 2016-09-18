@@ -8,11 +8,11 @@
 
 
 DFA *DFA_new(int n) {
-    DFA *dfa = (DFA*)malloc(sizeof(DFA));
+    DFA *dfa = (DFA*)malloc(sizeof(DFA)); /*frees space for the dfa*/
     dfa->nstates = n;
     dfa->current_state = 0;
-    dfa->states = (DFA_State*)malloc(n*sizeof(DFA_State));  /* not sure about this statement. Trying to dynamically allocate space */
-    for (int i = 0; i < n; i++) {
+    dfa->states = (DFA_State*)malloc(n*sizeof(DFA_State)); /*frees space for the states*/
+    for(int i=0; i<n; i++) {
     	dfa->states[i].is_accepting = FALSE;
     }
     for (int i=0; i<n; i++) {
