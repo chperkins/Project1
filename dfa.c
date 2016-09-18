@@ -71,6 +71,9 @@ void DFA_set_accepting(DFA *dfa, int statenum, int value) {
 int DFA_execute(DFA *dfa, char *input) {
 	for(int i=0; input[i] != '\0'; i++) {
 		dfa->current_state = dfa->states[dfa->current_state].transitions[input[i]];
+		if(dfa->current_state == -1) {
+			return FALSE;
+		}
 	} /* sets the current state to the transition of the previous state over and over*/
 	return dfa->states[dfa->current_state].is_accepting; /*returns accepting value of the final state*/
 }
@@ -85,6 +88,12 @@ int main (int argc, char **argv) {
 	printf("%d \n", DFA_get_transition(trial, 0, 'b'));
 	DFA_set_current_state(trial,2);
 	printf("%d",DFA_get_current_state(trial));
+
+	DFA *problem_1 = DFA_new(3);
+	DFA_set_transition(problem_1,'a', 1);
+	DFA_set_transition(problem_1, 'b', 2);
+	DFA_set_accepting(problem_1, 2, TRUE);
+	DFA_execute(problem_1, "ab");
 
 } /*synced up*/
 
