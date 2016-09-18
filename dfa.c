@@ -42,13 +42,28 @@ void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst) {
 	}
 }
 
+void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst) {
+	for(int i=0; i<DFA_NSYMBOLS; i++) {
+		dfa->states[src].transitions[i] = dst;
+	}
+}
+
 int DFA_get_current_state(DFA *dfa) {
     return dfa->current_state;
-}
 
 void DFA_set_current_state(DFA *dfa, int statenum) {
     dfa->current_state = statenum;
 }
+
+int DFA_get_accepting(DFA *dfa, int statenum) {
+	return dfa->states[statenum].is_accepting;
+}
+
+void DFA_set_accepting(DFA *dfa, int statenum, int value) {
+	dfa->states[statenum].is_accepting = value;
+}
+
+
 
 int main (int argc, char **argv) {
 	DFA *trial  = DFA_new(3);
