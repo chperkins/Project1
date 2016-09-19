@@ -69,6 +69,20 @@ void NFA_set_accepting(NFA *nfa, int statenum, bool value) {
     nfa->states[statenum].is_accepting = value; /*will this modify the is_accepting? do i need to point to the value or is this just fine?*/
 }
 
+
+void NFA_free(NFA *nfa) {
+    for (int i = 0; i < nfa->nstates; i++) {
+        NFA_State *state = &nfa->states[i];
+        for (int k = 0; k < NFA_NSYMBOLS; k++) {
+            IntSet_free(state->transitions[k]);
+        }
+        free(state->transitions);
+        free(state);
+    }
+    free(nfa);
+}
+
+
 bool NFA_execute(NFA *nfa, char *input) {
     for(int i = 0; input[i] != '\0'; i++) {
         /*set destination to be the set off all states we go to with input[i] from current states*/

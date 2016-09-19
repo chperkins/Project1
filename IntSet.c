@@ -159,7 +159,7 @@ struct IntSetIterator {
  * Don't forget to free() this when you're done iterating.
  */
 IntSetIterator *
-IntSet_iterator(const IntSet *set) {
+IntSet_iterator(IntSet *set) {
     IntSetIterator *iterator = (IntSetIterator*)malloc(sizeof(IntSetIterator));
     iterator->node = set->first;
     return iterator;
