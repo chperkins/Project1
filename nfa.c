@@ -86,7 +86,7 @@ void NFA_free(NFA *nfa) {
 bool NFA_execute(NFA *nfa, char *input) {
     for(int i = 0; input[i] != '\0'; i++) {
         /*set destination to be the set off all states we go to with input[i] from current states*/
-        IntSet *destination = IntSet_New();
+        IntSet *destination = IntSet_new();
         /*we use current_s_iterator to iterate through each state in the current states*/
         IntSetIterator *current_s_iterator = IntSet_iterator(nfa->current_states);
         while(IntSetIterator_has_next(current_s_iterator)) { /*this checks if theres another current state*/
