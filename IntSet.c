@@ -21,6 +21,10 @@ struct IntSet {
     struct IntSetNode *first;
     struct IntSetNode *last;
 };
+
+struct IntSetIterator {
+    struct IntSetNode *node;
+};
     
 /**
  * Structure for each element in an IntSet, stored as a linked list.
@@ -150,16 +154,13 @@ IntSet_iterate(const IntSet *set, void (*func)(int)) {
     }
 }
 
-struct IntSetIterator {
-    IntSetNode *node;
-};
-
 /**
  * Return an IntSetIterator for the given IntSet.
  * Don't forget to free() this when you're done iterating.
  */
+
 IntSetIterator *
-IntSet_iterator(IntSet *set) {
+IntSet_iterator(const IntSet *set) {
     IntSetIterator *iterator = (IntSetIterator*)malloc(sizeof(IntSetIterator));
     iterator->node = set->first;
     return iterator;
