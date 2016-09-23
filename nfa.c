@@ -71,10 +71,12 @@ void NFA_set_accepting(NFA *nfa, int statenum, bool value) {
 
 bool NFA_subExecute(NFA *nfa, IntSet *startStates, char *input) {
     IntSetIterator *current_s_iterator = IntSet_iterator(startStates); /*creates iterator of possible current states*/
-    while(IntSetIterator_has_next(current_s_iterator)) {
+    while(IntSetIterator_has_next(current_s_iterator)) { /*condition makes sure the intset isn't empty
 
         int tempState = IntSetIterator_next(current_s_iterator);
         /*printf("%d %d \n", tempState, input[0]=='\0' && nfa->states[tempState].is_accepting);*/
+
+        /*for when the input string isn't empty, we want to continue running execute depth first*/
 
         if(input[0] != '\0') {
            bool tempBool = NFA_subExecute(nfa, nfa->states[tempState].transitions[input[0]], (input+1));
