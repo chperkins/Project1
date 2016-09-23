@@ -55,7 +55,9 @@ extern bool NFA_get_accepting(NFA *nfa, int statenum);
 extern void NFA_set_accepting(NFA *nfa, int statenum, bool value);
 extern bool NFA_is_accepting(NFA *nfa);
 
-extern bool NFA_execute(NFA *nfa, IntSet *startStates, char *input);
+extern bool NFA_execute(NFA *nfa, char *input);
+
+extern bool NFA_subExecute(NFA *nfa, IntSet *startStates, char *input);
 
 // True to enable tracing during NFA_Execute
 extern int NFA_tracing;

@@ -18,7 +18,7 @@ NFA *NFA_new(int n) {
         for(int j=0; j<NFA_NSYMBOLS; j++) {
             nfa->states[i].transitions[j] = IntSet_new();
         }
-        nfa->states[i].is_accepting = 0;
+        nfa->states[i].is_accepting = FALSE;
     } /*initializes all accepting values as false*/
     return nfa;
 }
@@ -69,13 +69,13 @@ void NFA_set_accepting(NFA *nfa, int statenum, bool value) {
     nfa->states[statenum].is_accepting = value; /*will this modify the is_accepting? do i need to point to the value or is this just fine?*/
 }
 
-bool NFA_execute(NFA *nfa, IntSet *startStates, char *input) {
+bool NFA_subExecute(NFA *nfa, IntSet *startStates, char *input) {
     IntSetIterator *current_s_iterator = IntSet_iterator(startStates);
     while(IntSetIterator_has_next(current_s_iterator)) {
 
         int tempState = IntSetIterator_next(current_s_iterator);
 
-        if(nfa->states[tempState].is_accepting==TRUE) {
+        if(nfa->states[tempState].is_accepting==TRUE && input[0] == '\0') {
             return TRUE;
         }
 
@@ -84,6 +84,10 @@ bool NFA_execute(NFA *nfa, IntSet *startStates, char *input) {
         }
     }
     return FALSE;
+}
+
+bool NFA_execute(NFA *nfa, char *input) {
+    return NFA_subExecute(nfa, nfa->current_states, *input);
 }
 
 
@@ -106,6 +110,13 @@ int main (int argc, char **argv) {
     NFA *test = NFA_new(5);
     NFA_add_transition(test, 0, 'a', 1);
     IntSet_print(NFA_get_transitions(test, 0, 'a'));
+
+    NFA *p1 = NFA_new(2);
+    NFA_add_transition(p1, 0, 'a', 1);
+    NFA_add_transition(p1, 1, 'b', 2);
+    NFA_set_accepting(p1, 2, TRUE);
+    printf('%d', NFA_execute(p1, "ab"));
+
     return 0;
 }
 
