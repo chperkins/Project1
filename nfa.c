@@ -109,8 +109,9 @@ void NFA_free(NFA *nfa) {
         for (int k = 0; k < NFA_NSYMBOLS; k++) {
             IntSet_free(state->transitions[k]); /*frees each transition[sym] given a state*/
         }
-        free(nfa->states); /*frees the state finally*/
     }
+    IntSet_free(nfa->current_states);
+    free(nfa->states);
     free(nfa); /*then frees the whole nfa*/
 }
 
