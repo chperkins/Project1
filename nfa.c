@@ -42,7 +42,7 @@ void NFA_add_transition_str(NFA *nfa, int src, char *str, int dst) {
 }
 
 void NFA_add_transition_all(NFA *nfa, int src, int dst) {
-    for(int i=0; i<=NFA_NSYMBOLS; i++) {
+    for(int i=0; i<NFA_NSYMBOLS; i++) {
         IntSet_add(nfa->states[src].transitions[i], dst);
     }
 }
@@ -70,18 +70,21 @@ void NFA_set_accepting(NFA *nfa, int statenum, bool value) {
 }
 
 bool NFA_subExecute(NFA *nfa, IntSet *startStates, char *input) {
-    IntSetIterator *current_s_iterator = IntSet_iterator(startStates);
+    IntSetIterator *current_s_iterator = IntSet_iterator(startStates); /*creates iterator of possible current states*/
     while(IntSetIterator_has_next(current_s_iterator)) {
 
         int tempState = IntSetIterator_next(current_s_iterator);
-        printf("%d %d \n", tempState, input[0]=='\0' && nfa->states[tempState].is_accepting);
+        /*printf("%d %d \n", tempState, input[0]=='\0' && nfa->states[tempState].is_accepting);*/
 
-        if(input[0]=='\0' && nfa->states[tempState].is_accepting) {
+        if(input[0] != '\0') {
+           bool tempBool = NFA_subExecute(nfa, nfa->states[tempState].transitions[input[0]], (input+1));
+           if(tempBool) {
             return TRUE;
+           }
         }
 
-        else if(input[0] != '\0') {
-           NFA_subExecute(nfa, nfa->states[tempState].transitions[input[0]], (input+1));
+        else if(nfa->states[tempState].is_accepting) {
+            return TRUE;
         }
     }
     return FALSE;
@@ -112,7 +115,7 @@ int main (int argc, char **argv) {
     NFA_add_transition(test, 0, 'a', 1);
     IntSet_print(NFA_get_transitions(test, 0, 'a'));*/
 
-    NFA *p1 = NFA_new(3);
+    /*NFA *p1 = NFA_new(3);
     NFA_add_transition(p1, 0, 'a', 1);
     NFA_add_transition(p1, 1, 'b', 2);
     NFA_set_accepting(p1, 2, TRUE);
@@ -120,7 +123,19 @@ int main (int argc, char **argv) {
     printf("%d \n", NFA_execute(p1, "a"));
     printf("%d \n", NFA_execute(p1, "ab"));
     printf("%d \n", NFA_execute(p1, "abc"));
-    printf("%d \n", NFA_execute(p1, "def"));
+    printf("%d \n", NFA_execute(p1, "def"));*/
+
+    NFA *problem1 = NFA_new(4);
+    NFA_add_transition(problem1, 0,'m',1);
+    NFA_add_transition(problem1, 1,'a',2);
+    NFA_add_transition(problem1, 2,'n',3);
+    NFA_add_transition_all(problem1, 0,0);
+    NFA_set_accepting(problem1, 3, TRUE);
+    printf("%d \n", NFA_execute(problem1, "man"));
+    printf("%d \n", NFA_execute(problem1, "aewifasdciuandvx"));
+    printf("%d \n", NFA_execute(problem1, "amanb"));
+    printf("%d \n", NFA_execute(problem1, "manabc"));
+    printf("%d \n", NFA_execute(problem1, "defman"));
 
     return 0;
 }
