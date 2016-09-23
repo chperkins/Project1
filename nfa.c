@@ -69,33 +69,22 @@ void NFA_set_accepting(NFA *nfa, int statenum, bool value) {
     nfa->states[statenum].is_accepting = value; /*will this modify the is_accepting? do i need to point to the value or is this just fine?*/
 }
 
-bool NFA_execute(NFA *nfa, char *input) {
-    for(int i = 0; input[i] != '\0'; i++) {
-        /*set destination to be the set off all states we go to with input[i] from current states*/
-        IntSet *destination = IntSet_new();
-        /*we use current_s_iterator to iterate through each state in the current states*/
-        IntSetIterator *current_s_iterator = IntSet_iterator(nfa->current_states);
-        while(IntSetIterator_has_next(current_s_iterator)) { /*this checks if theres another current state*/
-            int tempState = IntSetIterator_next(current_s_iterator); /*temp state is the current state to look at*/
-            IntSet_union(destination, nfa->states[tempState].transitions[input[i]]); /*this adds all the transitions form tempstate give input to destination*/
-             /*this iterates the while loop*/
-        }
-        nfa->current_states = destination; /*this sets the current state to the set of destination states*/
-    } /*we run this over and over again for each input symbol*/
+bool NFA_execute(NFA *nfa, IntSet *startStates, char *input) {
+    IntSetIterator *current_s_iterator = IntSet_iterator(startStates);
+    while(IntSetIterator_has_next(current_s_iterator)) {
 
-    /*now we have to find out whether we will accept or not*/
+        int tempState = IntSetIterator_next(current_s_iterator);
 
-    IntSetIterator *final_s_iterator = IntSet_iterator(nfa->current_states); /*create another iterator for the set of last states*/
-    while(IntSetIterator_has_next(final_s_iterator)) {
-        int tempState = IntSetIterator_next(final_s_iterator);
-        /*if the current state is accepting, return true*/
-        if(nfa->states[tempState].is_accepting == TRUE) {
+        if(nfa->states[tempState].is_accepting==TRUE) {
             return TRUE;
         }
+
+        while(input[0] != '\0') {
+            NFA_execute(nfa, nfa->states[tempState].transitions[input[0]], (input+1));
+        }
     }
-    /*if nothing accepted, return false*/
     return FALSE;
-} 
+}
 
 
 
