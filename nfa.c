@@ -109,8 +109,7 @@ void NFA_free(NFA *nfa) {
         for (int k = 0; k < NFA_NSYMBOLS; k++) {
             IntSet_free(state->transitions[k]); /*frees each transition[sym] given a state*/
         }
-        free(state->transitions); /*frees the transitions array*/
-        free(state); /*frees the state finally*/
+        free(nfa->states); /*frees the state finally*/
     }
     free(nfa); /*then frees the whole nfa*/
 }
@@ -147,6 +146,7 @@ int main (int argc, char **argv) {
     printf("%d \n", NFA_execute(p2, "01abc01"));
     printf("%d \n", NFA_execute(p2, "cccabcaaa"));
     printf("%d \n", NFA_execute(p2, "abcabcabcabcabc"));
+    NFA_free(p2);
 
 
 
