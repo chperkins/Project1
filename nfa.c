@@ -74,20 +74,21 @@ bool NFA_subExecute(NFA *nfa, IntSet *startStates, char *input) {
     while(IntSetIterator_has_next(current_s_iterator)) {
 
         int tempState = IntSetIterator_next(current_s_iterator);
+        printf("%d %d \n", tempState, input[0]=='\0' && nfa->states[tempState].is_accepting);
 
-        if(nfa->states[tempState].is_accepting==TRUE && input[0] == '\0') {
+        if(input[0]=='\0' && nfa->states[tempState].is_accepting) {
             return TRUE;
         }
 
-        while(input[0] != '\0') {
-            NFA_execute(nfa, nfa->states[tempState].transitions[input[0]], (input+1));
+        else if(input[0] != '\0') {
+           NFA_subExecute(nfa, nfa->states[tempState].transitions[input[0]], (input+1));
         }
     }
     return FALSE;
 }
 
 bool NFA_execute(NFA *nfa, char *input) {
-    return NFA_subExecute(nfa, nfa->current_states, *input);
+    return NFA_subExecute(nfa, nfa->current_states, input);
 }
 
 
@@ -107,15 +108,19 @@ void NFA_free(NFA *nfa) {
 
 
 int main (int argc, char **argv) {
-    NFA *test = NFA_new(5);
+    /*NFA *test = NFA_new(5);
     NFA_add_transition(test, 0, 'a', 1);
-    IntSet_print(NFA_get_transitions(test, 0, 'a'));
+    IntSet_print(NFA_get_transitions(test, 0, 'a'));*/
 
-    NFA *p1 = NFA_new(2);
+    NFA *p1 = NFA_new(3);
     NFA_add_transition(p1, 0, 'a', 1);
     NFA_add_transition(p1, 1, 'b', 2);
     NFA_set_accepting(p1, 2, TRUE);
-    printf('%d', NFA_execute(p1, "ab"));
+    printf("%d \n", NFA_execute(p1, ""));
+    printf("%d \n", NFA_execute(p1, "a"));
+    printf("%d \n", NFA_execute(p1, "ab"));
+    printf("%d \n", NFA_execute(p1, "abc"));
+    printf("%d \n", NFA_execute(p1, "def"));
 
     return 0;
 }
