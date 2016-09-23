@@ -77,12 +77,12 @@ void DFA_set_accepting(DFA *dfa, int statenum, int value) {
 
 void DFA_free(DFA *dfa){
 
-	for(int i=0; i< DFA_get_size(dfa); i++){
+	/*for(int i=0; i< DFA_get_size(dfa); i++){
 		DFA_State *state = &dfa->states[i];
 		free(state);
-	}
-
-	free(dfa);
+	}*/
+	free(dfa->states);
+	free(dfa); /*finally frees the dfa*/
 }
 
 void DFA_print(DFA *dfa){
@@ -202,6 +202,7 @@ int main (int argc, char **argv) {
 	DFA_set_transition(problem_3, 1, '1', 0);
 
 	DFA_print(problem_3);
+	DFA_free(problem_3);
 
 } /*synced up*/
 
