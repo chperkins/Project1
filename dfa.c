@@ -130,7 +130,7 @@ void DFA_print(DFA *dfa){
 			}
 			printf("|\t");
 
-			for(int x=0; x<6; x++){
+			for(int x=0; x<6; x+=2){
 				if(diff_dest[x] != -1){
 					printf("|%c,%d|", diff_dest[x+1], diff_dest[x]);
 				}
@@ -138,7 +138,7 @@ void DFA_print(DFA *dfa){
 		}
 
 		else{
-			for (int j = 32; j < DFA_NSYMBOLS; j+=2){
+			for (int j = 32; j < DFA_NSYMBOLS; j++){
 
 				int node = dfa->states[i].transitions[j];
 
