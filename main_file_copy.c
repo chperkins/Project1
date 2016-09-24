@@ -5,18 +5,31 @@
 #include "IntSet.h"
 #include "dfa.h"
 #include <math.h>
+#include "LinkedList.h"
 
 DFA *NFA_to_DFA(NFA *nfa);
 
 DFA *NFA_to_DFA(NFA *nfa) {
 	int n = nfa->nstates; //saves number of states in original nfa
+    prinf("NFA n states: %d",)
 	int n_dfa_states = (int)pow(2,n); //saves 2^n
 	DFA_State *states = (DFA_State*)malloc(n_dfa_states*sizeof(DFA_State)); /*potential new states*/
 	IntSet *tracker[n_dfa_states]; /*tracker for index of states, each contains subset of nfa states*/
+
+    //Linked List
+    LinkedList *list_states = LinkedList_new();
+    LinkedListNode *cur = list_states->first;
+
 	for(int i=0; i<n_dfa_states; i++) {
 		tracker[i] = IntSet_new(); //initializes each tracker
 		for(int sym=0; sym<NFA_NSYMBOLS; sym++) {
 			states[i].transitions[sym]=-1; //sets all default transitions to NO_TRANSITION
+
+            //Linked List
+            DFA_State *node_state = (DFA_State*) malloc (sizeof(DFA_State));
+            node_state.transitions[sym] = -1;
+            cur->data = node_state;
+
 		}
 	}
 	int k=1; /*tracker for number of states*/
@@ -32,6 +45,11 @@ DFA *NFA_to_DFA(NFA *nfa) {
 				
 				if(nfa->states[tempState].is_accepting) {
 					states[i].is_accepting = TRUE; //if any state in the nfa is accepting, then states[i] should be too
+
+
+                    //Linked List
+                    cur->data.is_accepting = TRUE;
+
 				}
 			}
 			//now we search to see if dst has already been created
@@ -45,21 +63,41 @@ DFA *NFA_to_DFA(NFA *nfa) {
 			if(equalState == -1) {
 				IntSet_union(tracker[k], dst); //this sets tracker k to be dst so that it willb saved and searchable
 				states[i].transitions[sym] = k; //sets the transition from states[i] to k, the new state
+
+                //Linked List
+                cur->data.transitions[sym] = k;
+
+
 				k++; //iterates k since we have a new state to look at
 			}
 
 			else {
 				states[i].transitions[sym] = equalState; //since dst = equalState, this should be the transition
+
+
+                //Linked List
+                cur->data.transitions[sym] = equalState;
+
+
 			}
 		}
+
+        cur = cur->next;
 	}
 
 
 	/*now to create the final dfa*/
-
+    
+    LinkedListNode dfa_node = list_states->first;
 	DFA *new_DFA = DFA_new(k); //generates dfa
 	for(int i=0; i<k; i++) { //copies over all of the states
 		new_DFA->states[i] = states[i];
+
+       //Linked List
+        new_DFA->states[i] = dfa_node->data;
+        dfa_node = dfa_node->next;
+
+        
 	}
 
 	return new_DFA;
@@ -68,7 +106,7 @@ DFA *NFA_to_DFA(NFA *nfa) {
 int main (int argc, char **argv) { 
 
 	DFA *trial  = DFA_new(3);
-    printf("trial");
+    printf("trial \n");
 	DFA_get_size(trial);
 	DFA_set_transition(trial,0,'a',1);
 	printf("%d \n", DFA_get_transition(trial, 0, 'a'));
