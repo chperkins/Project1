@@ -9,13 +9,15 @@
 DFA *NFA_to_DFA(NFA *nfa);
 
 DFA *NFA_to_DFA(NFA *nfa) {
-	printf("%d", 1);
+	printf("ok1 \n");
 	int n = nfa->nstates; //saves number of states in original nfa
+	printf("ok2 \n");
 	int n_dfa_states = (int)pow(2,n); //saves 2^n
-	printf("ok");
+	printf("ok3 \n");
 	DFA_State *states = (DFA_State*)malloc(n_dfa_states*sizeof(DFA_State)); //potential new states
+	printf("ok4");
 	IntSet *tracker[n_dfa_states]; //tracker for index of states, each contains subset of nfa states
-	printf("ok");
+	printf("ok5");
 	for(int i=0; i<n_dfa_states; i++) {
 		tracker[i] = IntSet_new(); //initializes each tracker
 		for(int sym=0; sym<NFA_NSYMBOLS; sym++) {
@@ -23,12 +25,12 @@ DFA *NFA_to_DFA(NFA *nfa) {
 		}
 	}
 
-	printf("ok");
+	printf("ok \n");
 	int k=1; //tracker for number of states
 	IntSet_add(tracker[0], 0); //sets the first tracker as intset of 0
 
 	for(int i=0; i<k; i++) { //goes through each state
-		printf("%d", k);
+		printf("ok \n");
 		for(int sym=0; sym<NFA_NSYMBOLS; sym++) { //goes through each symbol
 			IntSet *dst = IntSet_new(); //makes a new intset of destinations given sym on states[i]
 			IntSetIterator *current_s_iterator = IntSet_iterator(tracker[i]); //creates iterator
@@ -209,15 +211,15 @@ int main (int argc, char **argv) {
     NFA_set_accepting(wston, 17, TRUE);
     NFA_set_accepting(wston, 19, TRUE);
 
-    printf("%d \n", NFA_execute(wston, "washington"));
+    //printf("%d \n", NFA_execute(wston, "washington"));
 
-    //DFA *dfa_test = NFA_to_DFA(wston);
-    //printf("%d \n", DFA_execute(dfa_wston, "washington"));
+    DFA *dfa_wston = NFA_to_DFA(wston);
+    printf("%d \n", DFA_execute(dfa_wston, "washington"));
 
 
     NFA_free(wston);
 
-    NFA *problem1 = NFA_new(4);
+    /*NFA *problem1 = NFA_new(4);
     NFA_add_transition(problem1, 0,'m',1);
     NFA_add_transition(problem1, 1,'a',2);
     NFA_add_transition(problem1, 2,'n',3);
@@ -238,10 +240,10 @@ int main (int argc, char **argv) {
     printf("%d \n", DFA_execute(dfa_test, "defman"));
 
     printf("%d \n", DFA_execute(dfa_test, "manmanman"));
-    printf("%d \n", DFA_execute(dfa_test, "manmanman1"));
+    printf("%d \n", DFA_execute(dfa_test, "manmanman1"));*/
 
 
-    DFA_free(dfa_test);
+    //DFA_free(dfa_test);
 
 	return 0;
 }
