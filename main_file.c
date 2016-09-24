@@ -78,11 +78,13 @@ int main (int argc, char **argv) {
 	printf("%d",DFA_get_current_state(trial));
     
 	printf("%d \n",DFA_get_current_state(trial));
+    DFA_free(trial);
 
 	DFA *problem_1 = DFA_new(3);
 	DFA_set_transition(problem_1, 0,'a', 1);
 	DFA_set_transition(problem_1, 1, 'b', 2);
 	DFA_set_accepting(problem_1, 2, TRUE);
+    DFA_free(problem_1);
 
 	DFA *problem_2 = DFA_new(3);
 	DFA_set_transition(problem_2, 0,'a', 1);
@@ -93,6 +95,7 @@ int main (int argc, char **argv) {
 	printf("%d \n", DFA_execute(problem_2, "abc"));
 	printf("%d \n", DFA_execute(problem_2, "xyz"));
 	printf("%d \n", DFA_execute(problem_2, "xyzab"));
+    DFA_free(problem_2);
 
 	DFA *problem_3 = DFA_new(2);
 	DFA_set_transition_all(problem_3, 0, 0);
@@ -102,8 +105,6 @@ int main (int argc, char **argv) {
 
 	DFA_print(problem_3);
 	DFA_free(problem_3);
-
-
 
 	   /*NFA *test = NFA_new(5);
     NFA_add_transition(test, 0, 'a', 1);
@@ -197,6 +198,7 @@ int main (int argc, char **argv) {
     NFA_set_accepting(wston, 19, TRUE);
 
     printf("%d \n", NFA_execute(wston, "washington"));
+    NFA_free(wston);
 
     NFA *problem1 = NFA_new(4);
     NFA_add_transition(problem1, 0,'m',1);
@@ -209,6 +211,7 @@ int main (int argc, char **argv) {
     printf("%d \n", NFA_execute(problem1, "amanb"));
     printf("%d \n", NFA_execute(problem1, "manabc"));
     printf("%d \n", NFA_execute(problem1, "defman"));
+    NFA_free(problem1);
 
     DFA *dfa_test = NFA_to_DFA(problem1);
     DFA_print(dfa_test);
@@ -217,6 +220,7 @@ int main (int argc, char **argv) {
     printf("%d \n", DFA_execute(dfa_test, "amanb"));
     printf("%d \n", DFA_execute(dfa_test, "manabc"));
     printf("%d \n", DFA_execute(dfa_test, "defman"));
+    DFA_free(dfa_test);
 
 	return 0;
 }
