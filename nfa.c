@@ -111,7 +111,7 @@ void NFA_free(NFA *nfa) {
         }
     }
     IntSet_free(nfa->current_states);
-    free(nfa->states);
+    free(nfa->states); /*frees memory allocated for the array of states*/
     free(nfa); /*then frees the whole nfa*/
 }
 

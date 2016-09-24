@@ -15,7 +15,7 @@
 DFA *DFA_new(int n) {
     DFA *dfa = (DFA*)malloc(sizeof(DFA)); /*frees space for the dfa*/
     dfa->nstates = n;  
-    dfa->current_state = 0;
+    dfa->current_state = 0; /*sets starting state to 0*/
     dfa->states = (DFA_State*)malloc(n*sizeof(DFA_State)); /*frees space for the states*/
     for(int i=0; i<n; i++) {
     	dfa->states[i].is_accepting = FALSE;
@@ -51,7 +51,7 @@ void DFA_set_transition_str(DFA *dfa, int src, char *str, int dst) {
 
 void DFA_set_transition_all(DFA *dfa, int src, int dst) {
 	for(int i=0; i<DFA_NSYMBOLS; i++) {
-		dfa->states[src].transitions[i] = dst;
+		dfa->states[src].transitions[i] = dst; /*sets all transitions to destination*/
 	}
 
 	/*sets the same transition for all symbols*/
@@ -81,7 +81,7 @@ void DFA_free(DFA *dfa){
 		DFA_State *state = &dfa->states[i];
 		free(state);
 	}*/
-	free(dfa->states);
+	free(dfa->states); /*frees memory allocates for the array of states*/
 	free(dfa); /*finally frees the dfa*/
 }
 
@@ -154,15 +154,15 @@ void DFA_print(DFA *dfa){
 }
 
 int DFA_execute(DFA *dfa, char *input) {
-	for(int i=0; input[i] != '\0'; i++) {
-		int destination = dfa->states[dfa->current_state].transitions[input[i]];
-		DFA_set_current_state(dfa, destination);
-		if(dfa->current_state == -1) {
+	for(int i=0; input[i] != '\0'; i++) { /*iterates while the input isn't empty*/
+		int destination = dfa->states[dfa->current_state].transitions[input[i]]; /*sets teh destination to the transition of input i*/
+		DFA_set_current_state(dfa, destination); /*sets current state to the transition*/
+		if(dfa->current_state == -1) { /*if no transition, the dfa halts and returns false*/
 			return FALSE;
 		}
 	} /* sets the current state to the transition of the previous state over and over*/
-	int final_state = dfa->current_state;
-	DFA_set_current_state(dfa, 0);
+	int final_state = dfa->current_state; /*puts the final state in a temporary*/
+	DFA_set_current_state(dfa, 0); /*this allows us to reset the current state to 0*/
 	return DFA_get_accepting(dfa, final_state); /*returns accepting value of the final state*/
 }
 
