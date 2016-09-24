@@ -9,43 +9,47 @@
 DFA *NFA_to_DFA(NFA *nfa);
 
 DFA *NFA_to_DFA(NFA *nfa) {
-	int n = nfa->nstates;
-	DFA_State *states = (DFA_State*)malloc(((int)pow(2,n))*sizeof(DFA_State)); /*potential new states*/
-	IntSet *tracker[(int)pow(2,n)]; /*tracker for index of states*/
-	for(int i=0; i<n; i++) {
-		tracker[i] = IntSet_new();
+	int n = nfa->nstates; //saves number of states in original nfa
+	int n_dfa_states = (int)pow(2,n); //saves 2^n
+	DFA_State *states = (DFA_State*)malloc(n_dfa_states*sizeof(DFA_State)); /*potential new states*/
+	IntSet *tracker[n_dfa_states]; /*tracker for index of states, each contains subset of nfa states*/
+	for(int i=0; i<n_dfa_states; i++) {
+		tracker[i] = IntSet_new(); //initializes each tracker
+		for(int sym=0; sym<NFA_NSYMBOLS; sym++) {
+			states[i].transitions[sym]=NO_TRANSITION; //sets all default transitions to NO_TRANSITION
+		}
 	}
 	int k=1; /*tracker for number of states*/
-	IntSet_add(tracker[0], 0);
+	IntSet_add(tracker[0], 0); //sets the first tracker as intset of 0
 
-	for(int i=0; i<k; i++) {
-		for(int sym=0; sym<NFA_NSYMBOLS; sym++) {
-			IntSet *dst = IntSet_new();
-			IntSetIterator *current_s_iterator = IntSet_iterator(tracker[i]);
+	for(int i=0; i<k; i++) { //goes through each state
+		for(int sym=0; sym<NFA_NSYMBOLS; sym++) { //goes through each symbol
+			IntSet *dst = IntSet_new(); //makes a new intset of destinations given sym on states[i]
+			IntSetIterator *current_s_iterator = IntSet_iterator(tracker[i]); //creates iterator
 			while(IntSetIterator_has_next(current_s_iterator)) {
 				int tempState = IntSetIterator_next(current_s_iterator);
-				IntSet_union(dst, nfa->states[tempState].transitions[sym]);
+				IntSet_union(dst, nfa->states[tempState].transitions[sym]); //unions transitions to the destination
 				
 				if(nfa->states[tempState].is_accepting) {
-					states[i].is_accepting = TRUE;
+					states[i].is_accepting = TRUE; //if any state in the nfa is accepting, then states[i] should be too
 				}
 			}
-
-			int equalState = -1;
+			//now we search to see if dst has already been created
+			int equalState = -1; //-1 is a default no value
 			for(int t=0; t<k; t++) {
 				if(IntSet_equals(dst, tracker[t])) {
-					equalState = t;
+					equalState = t; //if we found an equal
 				}
 			}
 
 			if(equalState == -1) {
-				IntSet_union(tracker[k], dst);
-				states[i].transitions[sym] = k;
-				k++;
+				IntSet_union(tracker[k], dst); //this sets tracker k to be dst so that it willb saved and searchable
+				states[i].transitions[sym] = k; //sets the transition from states[i] to k, the new state
+				k++; //iterates k since we have a new state to look at
 			}
 
 			else {
-				states[i].transitions[sym] = equalState;
+				states[i].transitions[sym] = equalState; //since dst = equalState, this should be the transition
 			}
 		}
 	}
@@ -53,8 +57,8 @@ DFA *NFA_to_DFA(NFA *nfa) {
 
 	/*now to create the final dfa*/
 
-	DFA *new_DFA = DFA_new(k);
-	for(int i=0; i<k; i++) {
+	DFA *new_DFA = DFA_new(k); //generates dfa
+	for(int i=0; i<k; i++) { //copies over all of the states
 		new_DFA->states[i] = states[i];
 	}
 
@@ -116,9 +120,9 @@ int main (int argc, char **argv) {
     printf("%d \n", NFA_execute(p1, "ab"));
     printf("%d \n", NFA_execute(p1, "abc"));
     printf("%d \n", NFA_execute(p1, "def"));
-    printf("%d \n", NFA_execute(p1, "abbbaabababababa"));
+    printf("%d \n", NFA_execute(p1, "abbbaabababababa"));*/
 
-    NFA *p2 = NFA_new(4);
+    /*NFA *p2 = NFA_new(4);
     NFA_add_transition_str(p2, 0, "abc", 0);
     NFA_add_transition_str(p2, 3, "abc", 3);
     NFA_add_transition(p2, 0, 'a', 1);
@@ -194,7 +198,7 @@ int main (int argc, char **argv) {
 
     printf("%d \n", NFA_execute(wston, "washington"));
 
-    /*NFA *problem1 = NFA_new(4);
+    NFA *problem1 = NFA_new(4);
     NFA_add_transition(problem1, 0,'m',1);
     NFA_add_transition(problem1, 1,'a',2);
     NFA_add_transition(problem1, 2,'n',3);
@@ -204,7 +208,15 @@ int main (int argc, char **argv) {
     printf("%d \n", NFA_execute(problem1, "aewifasdciuandvx"));
     printf("%d \n", NFA_execute(problem1, "amanb"));
     printf("%d \n", NFA_execute(problem1, "manabc"));
-    printf("%d \n", NFA_execute(problem1, "defman"));*/
+    printf("%d \n", NFA_execute(problem1, "defman"));
+
+    DFA *dfa_test = NFA_to_DFA(problem1);
+    DFA_print(dfa_test);
+    printf("DFA STUFF %d \n", DFA_execute(dfa_test, "man"));
+    printf("%d \n", DFA_execute(dfa_test, "aewifasdciuandvx"));
+    printf("%d \n", DFA_execute(dfa_test, "amanb"));
+    printf("%d \n", DFA_execute(dfa_test, "manabc"));
+    printf("%d \n", DFA_execute(dfa_test, "defman"));
 
 	return 0;
 }
