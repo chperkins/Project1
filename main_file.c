@@ -228,7 +228,6 @@ int main (int argc, char **argv) {
     printf("%d \n", NFA_execute(problem1, "amanb"));
     printf("%d \n", NFA_execute(problem1, "manabc"));
     printf("%d \n", NFA_execute(problem1, "defman"));
-    NFA_free(problem1);
 
     DFA *dfa_test = NFA_to_DFA(problem1);
     DFA_print(dfa_test);
