@@ -83,16 +83,19 @@ bool NFA_subExecute(NFA *nfa, IntSet *startStates, char *input) {
            bool tempBool = NFA_subExecute(nfa, nfa->states[tempState].transitions[input[0]], (input+1));
            /*we save this boolean and return true if true. otherwise we continue*/
            if(tempBool) {
+            free(current_s_iterator);
             return TRUE;
            }
         }
         /*if the input is finished and the tempState is accepting, we return true, otherwise we continue with the next state
         in all possible current states*/
         else if(nfa->states[tempState].is_accepting) {
+            free(current_s_iterator);
             return TRUE;
         }
     }
     /*if nothing returned true previously and all paths have been searched given the input, we return false*/
+    free(current_s_iterator);
     return FALSE;
 }
 
