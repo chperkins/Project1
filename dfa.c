@@ -138,7 +138,7 @@ void DFA_print(DFA *dfa){
 		}
 
 		else{
-			for (int j = 32; j < DFA_NSYMBOLS; j++){
+			for (int j = 32; j < DFA_NSYMBOLS; j+=2){
 
 				int node = dfa->states[i].transitions[j];
 
