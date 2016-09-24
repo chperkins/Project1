@@ -86,6 +86,10 @@ void DFA_free(DFA *dfa){
 }
 
 void DFA_print(DFA *dfa){
+	/* Print the DFA in the format
+	 * Node: origin_node | symbol, dest_node |
+	 * If there is a transition all 
+	 */
 
 	for(int i=0; i < DFA_get_size(dfa); i++){
 		printf("\nNode %d: ", i);
@@ -98,9 +102,6 @@ void DFA_print(DFA *dfa){
 		}
 
 		//Check if there are >128 transitions
-		/* Problem here: We can map multiple transitions to one state, but then we can only "look back" to the last added transition
-		 * So when 1 -> 0 and 1-> 1 from state 0, dfa->states[0].transition[1] = 1. So we miss the case 0->1->0.
-		 */
 		for(int x =32; x < 128; x++){
 			int dest = dfa->states[i].transitions[x];
 			if(dest != -1){
@@ -112,17 +113,17 @@ void DFA_print(DFA *dfa){
 				printf("|all,%d|", i);
 		}
 
-		if(trans_all[i] >92 && trans_all[i] <96){
+		if(trans_all[i] >88 && trans_all[i] <96){
 			int dest_all = dfa->states[i].transitions[0];
-			int diff_dest[] = {-1, -1, -1, -1, -1, -1};
+			int diff_dest[] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 			int diff_count = 0;
 
-			printf("|all -");
+			printf("|all ");
 
 			for(int x=32; x <128; x++){
 				int dest = dfa->states[i].transitions[x];
 				if(dest != dest_all){
-					printf("%c ", x);
+					printf("-%c ", x);
 					diff_dest[diff_count] = dest;
 					diff_dest[diff_count+1] = x;
 					diff_count +=2;
@@ -130,7 +131,7 @@ void DFA_print(DFA *dfa){
 			}
 			printf("|\t");
 
-			for(int x=0; x<6; x+=2){
+			for(int x=0; x<15; x+=2){
 				if(diff_dest[x] != -1){
 					printf("|%c,%d|", diff_dest[x+1], diff_dest[x]);
 				}
