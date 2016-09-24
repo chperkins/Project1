@@ -167,43 +167,4 @@ int DFA_execute(DFA *dfa, char *input) {
 }
 
 
-int main (int argc, char **argv) {
-	DFA *trial  = DFA_new(3);
-	DFA_get_size(trial);
-	DFA_set_transition(trial,0,'a',1);
-	printf("%d \n", DFA_get_transition(trial, 0, 'a'));
-	DFA_set_transition_str(trial,0,"bc",2);
-	printf("%d \n", DFA_get_transition(trial, 0, 'b'));
-	DFA_set_current_state(trial,2);
-
-	printf("%d",DFA_get_current_state(trial));
-    
-	printf("%d \n",DFA_get_current_state(trial));
-
-	DFA *problem_1 = DFA_new(3);
-	DFA_set_transition(problem_1, 0,'a', 1);
-	DFA_set_transition(problem_1, 1, 'b', 2);
-	DFA_set_accepting(problem_1, 2, TRUE);
-
-	DFA *problem_2 = DFA_new(3);
-	DFA_set_transition(problem_2, 0,'a', 1);
-	DFA_set_transition(problem_2, 1, 'b', 2);
-	DFA_set_transition_all(problem_2, 2, 2);
-	DFA_set_accepting(problem_2, 2, TRUE);
-	printf("%d \n", DFA_execute(problem_2, "ab"));
-	printf("%d \n", DFA_execute(problem_2, "abc"));
-	printf("%d \n", DFA_execute(problem_2, "xyz"));
-	printf("%d \n", DFA_execute(problem_2, "xyzab"));
-
-	DFA *problem_3 = DFA_new(2);
-	DFA_set_transition_all(problem_3, 0, 0);
-	DFA_set_transition_all(problem_3, 1, 1);
-	DFA_set_transition(problem_3, 0, '1', 1);
-	DFA_set_transition(problem_3, 1, '1', 0);
-
-	DFA_print(problem_3);
-	DFA_free(problem_3);
-
-} /*synced up*/
-
 #endif
