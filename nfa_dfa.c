@@ -5,12 +5,15 @@
 #include "IntSet.h"
 #include "dfa.h"
 #include <math.h>
+#include "LinkedList.h"
 
 DFA *NFA_to_DFA(NFA *nfa);
 
 DFA *NFA_to_DFA(NFA *nfa) {
 	int n = nfa->nstates;
 	DFA_State *states = (DFA_State*)malloc(((int)pow(2,n))*sizeof(DFA_State)); /*potential new states*/
+	LinkedList list_states = LinkedList_new();
+
 	IntSet *tracker[(int)pow(2,n)]; /*tracker for index of states*/
 	for(int i=0; i<n; i++) {
 		tracker[i] = IntSet_new();
@@ -28,7 +31,7 @@ DFA *NFA_to_DFA(NFA *nfa) {
 				
 				if(nfa->states[tempState].is_accepting) {
 					states[i].is_accepting = TRUE;
-				}
+					LinkedList_element_at(list_states,i).is_accepting = TRUE;				}
 			}
 
 			int equalState = -1;
@@ -41,11 +44,13 @@ DFA *NFA_to_DFA(NFA *nfa) {
 			if(equalState == -1) {
 				IntSet_union(tracker[k], dst);
 				states[i].transitions[sym] = k;
+				LinkedList_element_at(list_states,i).transitions[sym] = k;
 				k++;
 			}
 
 			else {
 				states[i].transitions[sym] = equalState;
+				LinkedList_element_at(list_states,i).transitions[sym] = equalState;
 			}
 		}
 	}
