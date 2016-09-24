@@ -106,12 +106,9 @@ DFA *NFA_to_DFA(NFA *nfa) {
 
 int main (int argc, char **argv) { 
 
-<<<<<<< HEAD
 	DFA *trial  = DFA_new(3);
     printf("trial");
-=======
 	/*DFA *trial  = DFA_new(3);
->>>>>>> 011d9cdfaeda86de88cd4c048fe9ac76abb78046
 	DFA_get_size(trial);
 	DFA_set_transition(trial,0,'a',1);
 	printf("%d \n", DFA_get_transition(trial, 0, 'a'));
@@ -265,11 +262,8 @@ int main (int argc, char **argv) {
     printf("%d \n", NFA_execute(problem1, "amanb"));
     printf("%d \n", NFA_execute(problem1, "manabc"));
     printf("%d \n", NFA_execute(problem1, "defman"));
-<<<<<<< HEAD
   
-=======
 
->>>>>>> 011d9cdfaeda86de88cd4c048fe9ac76abb78046
     DFA *dfa_test = NFA_to_DFA(problem1);
     printf("dfa_test \n");
     DFA_print(dfa_test);
@@ -278,10 +272,9 @@ int main (int argc, char **argv) {
     printf("%d \n", DFA_execute(dfa_test, "amanb"));
     printf("%d \n", DFA_execute(dfa_test, "manabc"));
     printf("%d \n", DFA_execute(dfa_test, "defman"));
-<<<<<<< HEAD
     DFA_free(dfa_test);
     NFA_free(problem1);
-=======
+
 
     printf("%d \n", DFA_execute(dfa_test, "manmanman"));
     printf("%d \n", DFA_execute(dfa_test, "manmanman1"));
@@ -289,6 +282,5 @@ int main (int argc, char **argv) {
 
     //DFA_free(dfa_test);
 
->>>>>>> 011d9cdfaeda86de88cd4c048fe9ac76abb78046
 	return 0;
 }
