@@ -95,7 +95,7 @@ DFA *NFA_to_DFA(NFA *nfa) {
 
 	DFA *new_DFA = DFA_new(k); //generates dfa
 	for(int l=0; l<k; l++) { //copies over all of the states
-		&(new_DFA->states[l]) = (LinkedList_element_at(states1, l));
+		new_DFA->states[l] = LinkedList_element_at(states1, l);
 	}
 	for(int l=0; l<n_dfa_states; l++) {
 		IntSet_free(tracker[l]);
