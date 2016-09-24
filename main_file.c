@@ -16,7 +16,7 @@ DFA *NFA_to_DFA(NFA *nfa) {
 	for(int i=0; i<n_dfa_states; i++) {
 		tracker[i] = IntSet_new(); //initializes each tracker
 		for(int sym=0; sym<NFA_NSYMBOLS; sym++) {
-			states[i].transitions[sym]=NO_TRANSITION; //sets all default transitions to NO_TRANSITION
+			states[i].transitions[sym]=-1; //sets all default transitions to NO_TRANSITION
 		}
 	}
 	int k=1; /*tracker for number of states*/
