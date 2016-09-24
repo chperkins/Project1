@@ -144,11 +144,14 @@ void DFA_print(DFA *dfa){
 				int node = dfa->states[i].transitions[j];
 
 				if(node != -1 && trans_all[node] <96){
-					printf("|%c,%d|", j, node);
+					//printf("|%c,%d|", j, node);
 				}
 							
 			}	
 		}
+
+		printf("Number of transitions in Node %d: %d\n", i, trans_all[i] );
+
 	}
 		
 	printf("\n");
