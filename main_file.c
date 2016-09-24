@@ -95,7 +95,7 @@ DFA *NFA_to_DFA(NFA *nfa) {
 				k++;
 			}
 			else {
-				printf("z1 %d \n", equalState);
+				printf("z1 %d \n", (int)(LinkedListIterator_has_next(listIterate)));
 				currentState->transitions[sym] = equalState; //since dst = equalState, this should be the transition
 				printf("z2 \n");
 			}
@@ -103,7 +103,7 @@ DFA *NFA_to_DFA(NFA *nfa) {
 
 			//IntSet_free(dst);
 			//free(current_s_iterator);
-			//free(currentState);
+			free(currentState);
 		}
 		i++;
 	}
