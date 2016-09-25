@@ -197,7 +197,7 @@ DFA *contain_moo() {
     return moo_DFA;
 
 }
-NFA *contain_moo_NFA() {
+NFA *contain_loo_NFA() {
 
     NFA *loo_NFA = NFA_new(4);
     NFA_add_transition_all(loo_NFA, 0, 0);

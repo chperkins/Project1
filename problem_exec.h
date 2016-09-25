@@ -12,4 +12,4 @@ extern DFA *even_num_1();
 extern DFA *even_num_01 ();
 extern NFA *end_in_man();
 extern DFA *contain_moo();
-extern NFA *contain_moo_NFA();
+extern NFA *contain_loo_NFA();
