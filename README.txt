@@ -3,8 +3,9 @@ Project 1: Finite Automata
 Collaborators: Charlie Perkins, Le Xuan Luba, Maria Weber
 
 Compile/Run Instructions:
-- In command line, navigate to project folder
-- Use command "make", which will compile and execute the program
+- In command line, navigate to project folder, then:
+
+	make
 
 Clean:
 - Use "make clean" to remove executable
