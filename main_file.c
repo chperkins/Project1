@@ -13,7 +13,7 @@ DFA_State *DFA_State_new();
 
 DFA_State *DFA_State_new() {
 	DFA_State *x = (DFA_State*)malloc(sizeof(DFA_State));
-	x->is_accepting = false;
+	x->is_accepting = FALSE;
 	for(int sym=0; sym<NFA_NSYMBOLS; sym++) {
 		x->transitions[sym] = -1;
 	}
