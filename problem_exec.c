@@ -180,3 +180,34 @@ printf("\n-----------------------------PROBLEM 2----------------------------- \n
     printf("Test for \"\": %d \n", NFA_execute(problem2_a, ""));
     return problem2_a;
 }
+
+DFA *contain_moo() {
+    DFA *moo_DFA = DFA_new(4);
+    DFA_set_transition_all(moo_DFA, 0, 0);
+    DFA_set_transition_all(moo_DFA, 1, 0);
+    DFA_set_transition_all(moo_DFA, 2, 0);
+    DFA_set_transition_all(moo_DFA, 3, 3);
+    DFA_set_transition(moo_DFA, 0, 'm', 1);
+    DFA_set_transition(moo_DFA, 1, 'm', 1);
+    DFA_set_transition(moo_DFA, 1, '0', 2);
+    DFA_set_transition(moo_DFA, 2, 'm', 1);
+    DFA_set_transition(moo_DFA, 2, 'o', 3);
+    DFA_set_accepting(moo_DFA, 3, TRUE);
+
+    return moo_DFA;
+
+}
+NFA *contain_moo_NFA() {
+
+    NFA *loo_NFA = NFA_new(4);
+    NFA_add_transition_all(loo_NFA, 0, 0);
+    NFA_add_transition_all(loo_NFA, 3, 3);
+    NFA_add_transition(loo_NFA, 0, 'l', 1);
+    NFA_add_transition(loo_NFA, 0, 'l', 1);
+    NFA_add_transition(loo_NFA, 1, 'o', 2);
+    NFA_add_transition(loo_NFA, 2, 'o', 3);
+    NFA_set_accepting(loo_NFA, 3, TRUE);
+
+    return loo_NFA;
+
+}
