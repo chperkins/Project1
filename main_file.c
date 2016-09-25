@@ -90,16 +90,170 @@ DFA *NFA_to_DFA(NFA *nfa) {
 	}
 
 	DFA *new_DFA = DFA_new(num_states); //generates dfa
+	LinkedListIterator *finalStates = LinkedList_iterator(states);
 	for(int l=0; l<num_states; l++) { //copies over all of the states
-		DFA_State *oneState = DFA_State_new();
-		oneState = LinkedList_element_at(states, l);
+		DFA_State *oneState = LinkedListIterator_next(finalStates);
 		new_DFA->states[l] = *oneState;
+		free(oneState);
 	}
 
+	free(finalStates);
+	free(listIterate);
+	free(isIterate);
 	return new_DFA;
 }
 
-int main (int argc, char **argv) { 
+int main (int argc, char **argv) {
+
+	printf("-----------------------------PROBLEM 1----------------------------- \n"); 
+
+	printf("Problem 1 (a) \n");
+	DFA *problem1_a = DFA_new(3);
+	DFA_set_transition(problem1_a, 0, 'a', 1);
+	DFA_set_transition(problem1_a, 1, 'b', 2);
+	DFA_set_accepting(problem1_a, 2, TRUE);
+
+	printf("Problem 1 (b) \n");
+	DFA *problem1_b = DFA_new(3);
+	DFA_set_transition(problem1_b, 0, 'a', 1);
+	DFA_set_transition(problem1_b, 1, 'b', 2);
+	DFA_set_transition_all(problem1_b, 2, 2);
+	DFA_set_accepting(problem1_b, 2, TRUE);
+
+	printf("Problem 1 (c) \n");
+	DFA *problem1_c = DFA_new(2);
+	DFA_set_transition(problem1_c, 0, '1', 1);
+	DFA_set_transition(problem1_c, 1, '1', 0);
+	DFA_set_transition(problem1_c, 0, '0', 0);
+	DFA_set_transition(problem1_c, 1, '0', 1);
+	DFA_set_accepting(problem1_c, 0, TRUE);
+
+	printf("Problem 1 (d) \n");
+	DFA *problem1_d = DFA_new(4);
+	DFA_set_transition(problem1_d, 0, '1', 1);
+	DFA_set_transition(problem1_d, 0, '0', 2);
+	DFA_set_transition(problem1_d, 1, '1', 0);
+	DFA_set_transition(problem1_d, 1, '0', 3);
+	DFA_set_transition(problem1_d, 2, '0', 0);
+	DFA_set_transition(problem1_d, 2, '1', 3);
+	DFA_set_transition(problem1_d, 3, '0', 1);
+	DFA_set_transition(problem1_d, 3, '1', 2);
+	DFA_set_accepting(problem1_d, 0, TRUE);
+
+	printf("Problem 1 (e) \n");
+
+
+	printf("\n-----------------------------PROBLEM 2----------------------------- \n");
+
+	printf("Problem 2 (a) \n");
+	NFA *problem2_a = NFA_new(4);
+    NFA_add_transition(problem2_a, 0,'m',1);
+    NFA_add_transition(problem2_a, 1,'a',2);
+    NFA_add_transition(problem2_a, 2,'n',3);
+    NFA_add_transition_all(problem2_a, 0,0);
+    NFA_set_accepting(problem2_a, 3, TRUE);
+
+
+    printf("Problem 2 (b) \n");
+
+    NFA *problem2_b = NFA_new(20);
+    NFA_add_transition_all(problem2_b, 0, 0);
+
+    NFA_add_transition(problem2_b, 0, 'a', 1);
+    NFA_add_transition_all(problem2_b, 1, 1);
+    NFA_add_transition(problem2_b, 1, 'a', 2);
+    NFA_add_transition_all(problem2_b, 2, 2);
+
+    NFA_add_transition(problem2_b, 0, 'g', 3);
+    NFA_add_transition_all(problem2_b, 3, 3);
+    NFA_add_transition(problem2_b, 3, 'g', 4);
+    NFA_add_transition_all(problem2_b, 4, 4);
+
+    NFA_add_transition(problem2_b, 0, 'h', 5);
+    NFA_add_transition_all(problem2_b, 5, 5);
+    NFA_add_transition(problem2_b, 5, 'h', 6);
+    NFA_add_transition_all(problem2_b, 6, 6);
+
+    NFA_add_transition(problem2_b, 0, 'i', 7);
+    NFA_add_transition_all(problem2_b, 7, 7);
+    NFA_add_transition(problem2_b, 7, 'i', 8);
+    NFA_add_transition_all(problem2_b, 8, 8);
+
+    NFA_add_transition(problem2_b, 0, 'n', 9);
+    NFA_add_transition_all(problem2_b, 9, 9);
+    NFA_add_transition(problem2_b, 9, 'n', 10);
+    NFA_add_transition_all(problem2_b, 10, 10);
+    NFA_add_transition(problem2_b, 10, 'n', 11);
+    NFA_add_transition_all(problem2_b, 11, 11);
+
+    NFA_add_transition(problem2_b, 0, 'o', 12);
+    NFA_add_transition_all(problem2_b, 12, 12);
+    NFA_add_transition(problem2_b, 12, 'o', 13);
+    NFA_add_transition_all(problem2_b, 13, 13);
+
+    NFA_add_transition(problem2_b, 0, 's', 14);
+    NFA_add_transition_all(problem2_b, 14, 14);
+    NFA_add_transition(problem2_b, 14, 's', 15);
+    NFA_add_transition_all(problem2_b, 15, 15);
+
+    NFA_add_transition(problem2_b, 0, 't', 16);
+    NFA_add_transition_all(problem2_b, 16, 16);
+    NFA_add_transition(problem2_b, 16, 't', 17);
+    NFA_add_transition_all(problem2_b, 17, 17);
+
+    NFA_add_transition(problem2_b, 0, 'w', 18);
+    NFA_add_transition_all(problem2_b, 18, 18);
+    NFA_add_transition(problem2_b, 18, 'w', 19);
+    NFA_add_transition_all(problem2_b, 19, 19);
+
+    NFA_set_accepting(problem2_b, 2, TRUE);
+    NFA_set_accepting(problem2_b, 4, TRUE);
+    NFA_set_accepting(problem2_b, 6, TRUE);
+    NFA_set_accepting(problem2_b, 8, TRUE);
+    NFA_set_accepting(problem2_b, 11, TRUE);
+    NFA_set_accepting(problem2_b, 13, TRUE);
+    NFA_set_accepting(problem2_b, 15, TRUE);
+    NFA_set_accepting(problem2_b, 17, TRUE);
+    NFA_set_accepting(problem2_b, 19, TRUE);
+
+    printf("Problem 2 (c) \n");
+
+    NFA *problem2_c = NFA_new(9);
+    NFA_add_transition_str(problem2_c, 0, "abc", 0);
+    NFA_add_transition(problem2_c, 0, 'a', 1);
+    NFA_add_transition(problem2_c, 1, 'b', 2);
+    NFA_add_transition(problem2_c, 2, 'c', 3);
+    NFA_add_transition_str(problem2_c, 3, "abc", 3);
+    NFA_add_transition(problem2_c, 0, 'b', 4);
+    NFA_add_transition(problem2_c, 4, 'a', 5);
+    NFA_add_transition_str(problem2_c, 5, "abc", 5);
+    NFA_add_transition(problem2_c, 0, 'b', 6);
+    NFA_add_transition(problem2_c, 6, 'b', 7);
+    NFA_add_transition(problem2_c, 7, 'a', 8);
+    NFA_add_transition_str(problem2_c, 8, "abc", 8);
+    NFA_set_accepting(problem2_c, 3, TRUE);
+    NFA_set_accepting(problem2_c, 5, TRUE);
+    NFA_set_accepting(problem2_c, 8, TRUE);
+
+
+	printf("\n-----------------------------PROBLEM 3-----------------------------");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	//DFA *trial  = DFA_new(3);
     //printf("trial");
@@ -199,7 +353,7 @@ int main (int argc, char **argv) {
 
     NFA_free(p2);
 
-    NFA *p3 = NFA_new(9);
+    /*NFA *p3 = NFA_new(9);
     NFA_add_transition_str(p3, 0, "abc", 0);
     NFA_add_transition(p3, 0, 'a', 1);
     NFA_add_transition(p3, 1, 'b', 2);
@@ -232,77 +386,77 @@ int main (int argc, char **argv) {
     printf("%d \n", DFA_execute(p3_dfa, "01abc01"));
     printf("%d \n", DFA_execute(p3_dfa, "cccabcaaa"));
     printf("%d \n", DFA_execute(p3_dfa, "abcabcabcabcabc"));
-    printf("%d \n", DFA_execute(p3_dfa, "ccccbbaccc"));
+    printf("%d \n", DFA_execute(p3_dfa, "ccccbbaccc"));*/
 
 
-    /*NFA *wston = NFA_new(20);
+    /*NFA *problem2_b = NFA_new(20);
     
-    printf("wston \n");
-    NFA_add_transition_all(wston, 0, 0);
+    printf("problem2_b \n");
+    NFA_add_transition_all(problem2_b, 0, 0);
 
-    NFA_add_transition(wston, 0, 'a', 1);
-    NFA_add_transition_all(wston, 1, 1);
-    NFA_add_transition(wston, 1, 'a', 2);
-    NFA_add_transition_all(wston, 2, 2);
+    NFA_add_transition(problem2_b, 0, 'a', 1);
+    NFA_add_transition_all(problem2_b, 1, 1);
+    NFA_add_transition(problem2_b, 1, 'a', 2);
+    NFA_add_transition_all(problem2_b, 2, 2);
 
-    NFA_add_transition(wston, 0, 'g', 3);
-    NFA_add_transition_all(wston, 3, 3);
-    NFA_add_transition(wston, 3, 'g', 4);
-    NFA_add_transition_all(wston, 4, 4);
+    NFA_add_transition(problem2_b, 0, 'g', 3);
+    NFA_add_transition_all(problem2_b, 3, 3);
+    NFA_add_transition(problem2_b, 3, 'g', 4);
+    NFA_add_transition_all(problem2_b, 4, 4);
 
-    NFA_add_transition(wston, 0, 'h', 5);
-    NFA_add_transition_all(wston, 5, 5);
-    NFA_add_transition(wston, 5, 'h', 6);
-    NFA_add_transition_all(wston, 6, 6);
+    NFA_add_transition(problem2_b, 0, 'h', 5);
+    NFA_add_transition_all(problem2_b, 5, 5);
+    NFA_add_transition(problem2_b, 5, 'h', 6);
+    NFA_add_transition_all(problem2_b, 6, 6);
 
-    NFA_add_transition(wston, 0, 'i', 7);
-    NFA_add_transition_all(wston, 7, 7);
-    NFA_add_transition(wston, 7, 'i', 8);
-    NFA_add_transition_all(wston, 8, 8);
+    NFA_add_transition(problem2_b, 0, 'i', 7);
+    NFA_add_transition_all(problem2_b, 7, 7);
+    NFA_add_transition(problem2_b, 7, 'i', 8);
+    NFA_add_transition_all(problem2_b, 8, 8);
 
-    NFA_add_transition(wston, 0, 'n', 9);
-    NFA_add_transition_all(wston, 9, 9);
-    NFA_add_transition(wston, 9, 'n', 10);
-    NFA_add_transition_all(wston, 10, 10);
-    NFA_add_transition(wston, 10, 'n', 11);
-    NFA_add_transition_all(wston, 11, 11);
+    NFA_add_transition(problem2_b, 0, 'n', 9);
+    NFA_add_transition_all(problem2_b, 9, 9);
+    NFA_add_transition(problem2_b, 9, 'n', 10);
+    NFA_add_transition_all(problem2_b, 10, 10);
+    NFA_add_transition(problem2_b, 10, 'n', 11);
+    NFA_add_transition_all(problem2_b, 11, 11);
 
-    NFA_add_transition(wston, 0, 'o', 12);
-    NFA_add_transition_all(wston, 12, 12);
-    NFA_add_transition(wston, 12, 'o', 13);
-    NFA_add_transition_all(wston, 13, 13);
+    NFA_add_transition(problem2_b, 0, 'o', 12);
+    NFA_add_transition_all(problem2_b, 12, 12);
+    NFA_add_transition(problem2_b, 12, 'o', 13);
+    NFA_add_transition_all(problem2_b, 13, 13);
 
-    NFA_add_transition(wston, 0, 's', 14);
-    NFA_add_transition_all(wston, 14, 14);
-    NFA_add_transition(wston, 14, 's', 15);
-    NFA_add_transition_all(wston, 15, 15);
+    NFA_add_transition(problem2_b, 0, 's', 14);
+    NFA_add_transition_all(problem2_b, 14, 14);
+    NFA_add_transition(problem2_b, 14, 's', 15);
+    NFA_add_transition_all(problem2_b, 15, 15);
 
-    NFA_add_transition(wston, 0, 't', 16);
-    NFA_add_transition_all(wston, 16, 16);
-    NFA_add_transition(wston, 16, 't', 17);
-    NFA_add_transition_all(wston, 17, 17);
+    NFA_add_transition(problem2_b, 0, 't', 16);
+    NFA_add_transition_all(problem2_b, 16, 16);
+    NFA_add_transition(problem2_b, 16, 't', 17);
+    NFA_add_transition_all(problem2_b, 17, 17);
 
-    NFA_add_transition(wston, 0, 'w', 18);
-    NFA_add_transition_all(wston, 18, 18);
-    NFA_add_transition(wston, 18, 'w', 19);
-    NFA_add_transition_all(wston, 19, 19);
+    NFA_add_transition(problem2_b, 0, 'w', 18);
+    NFA_add_transition_all(problem2_b, 18, 18);
+    NFA_add_transition(problem2_b, 18, 'w', 19);
+    NFA_add_transition_all(problem2_b, 19, 19);
 
-    NFA_set_accepting(wston, 2, TRUE);
-    NFA_set_accepting(wston, 4, TRUE);
-    NFA_set_accepting(wston, 6, TRUE);
-    NFA_set_accepting(wston, 8, TRUE);
-    NFA_set_accepting(wston, 11, TRUE);
-    NFA_set_accepting(wston, 13, TRUE);
-    NFA_set_accepting(wston, 15, TRUE);
-    NFA_set_accepting(wston, 17, TRUE);
-    NFA_set_accepting(wston, 19, TRUE);
+    NFA_set_accepting(problem2_b, 2, TRUE);
+    NFA_set_accepting(problem2_b, 4, TRUE);
+    NFA_set_accepting(problem2_b, 6, TRUE);
+    NFA_set_accepting(problem2_b, 8, TRUE);
+    NFA_set_accepting(problem2_b, 11, TRUE);
+    NFA_set_accepting(problem2_b, 13, TRUE);
+    NFA_set_accepting(problem2_b, 15, TRUE);
+    NFA_set_accepting(problem2_b, 17, TRUE);
+    NFA_set_accepting(problem2_b, 19, TRUE);
 
-    printf("%d \n", NFA_execute(wston, "washington"));
+    printf("%d \n", NFA_execute(problem2_b, "washington"));
 
-    DFA *wston1 = NFA_to_DFA(wston);*/
+    DFA *problem2_b1 = NFA_to_DFA(problem2_b);*/
 
 
-    //printf(" DFA NFA TEST %d \n", DFA_execute(dfa_wston, "washington"));*/
+    //printf(" DFA NFA TEST %d \n", DFA_execute(dfa_problem2_b, "washington"));*/
 
 
     /*NFA *problem1 = NFA_new(4);
