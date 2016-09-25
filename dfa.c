@@ -125,7 +125,7 @@ void DFA_print(DFA *dfa){
 				for(int x=32; x <128; x++){
 					int dest = dfa->states[i].transitions[x];
 					if(dest != dest_all){
-						printf("-%c ", x);
+						printf("-\'%c\'", x);
 						diff_dest[diff_count] = dest;
 						diff_dest[diff_count+1] = x;
 						diff_count +=2;
@@ -133,11 +133,11 @@ void DFA_print(DFA *dfa){
 				}
 				printf("|\t");
 
-				for(int x=0; x<15; x+=2){
+				/*for(int x=0; x<15; x+=2){
 					if(diff_dest[x] != -1){
-						//printf("|%c,%d|", diff_dest[x+1], diff_dest[x]);
+						printf("|%c,%d|", diff_dest[x+1], diff_dest[x]);
 					}
-				}
+				}*/
 			}
 		}
 
@@ -147,7 +147,7 @@ void DFA_print(DFA *dfa){
 			int dest = dfa->states[i].transitions[j];
 
 			if(dest != -1 && trans_all[dest] <88){
-				printf("|%c,%d|", j, dest);
+				printf("|\'%c\',%d|", j, dest);
 			}							
 		}
 	}
