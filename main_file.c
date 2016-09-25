@@ -112,23 +112,26 @@ int main (int argc, char **argv) {
 	DFA_set_transition(problem1_a, 0, 'a', 1);
 	DFA_set_transition(problem1_a, 1, 'b', 2);
 	DFA_set_accepting(problem1_a, 2, TRUE);
+    DFA_print(problem1_a);
 
-	printf("Problem 1 (b) \n");
+	printf("\n Problem 1 (b) \n");
 	DFA *problem1_b = DFA_new(3);
 	DFA_set_transition(problem1_b, 0, 'a', 1);
 	DFA_set_transition(problem1_b, 1, 'b', 2);
 	DFA_set_transition_all(problem1_b, 2, 2);
 	DFA_set_accepting(problem1_b, 2, TRUE);
+    DFA_print(problem1_b);
 
-	printf("Problem 1 (c) \n");
+	printf("\n Problem 1 (c) \n");
 	DFA *problem1_c = DFA_new(2);
 	DFA_set_transition(problem1_c, 0, '1', 1);
 	DFA_set_transition(problem1_c, 1, '1', 0);
 	DFA_set_transition(problem1_c, 0, '0', 0);
 	DFA_set_transition(problem1_c, 1, '0', 1);
 	DFA_set_accepting(problem1_c, 0, TRUE);
+    DFA_print(problem1_c);
 
-	printf("Problem 1 (d) \n");
+	printf("\n Problem 1 (d) \n");
 	DFA *problem1_d = DFA_new(4);
 	DFA_set_transition(problem1_d, 0, '1', 1);
 	DFA_set_transition(problem1_d, 0, '0', 2);
@@ -139,8 +142,9 @@ int main (int argc, char **argv) {
 	DFA_set_transition(problem1_d, 3, '0', 1);
 	DFA_set_transition(problem1_d, 3, '1', 2);
 	DFA_set_accepting(problem1_d, 0, TRUE);
+    DFA_print(problem1_d);
 
-	printf("Problem 1 (e) \n");
+	printf("\n Problem 1 (e) \n");
 
 
 	printf("\n-----------------------------PROBLEM 2----------------------------- \n");
