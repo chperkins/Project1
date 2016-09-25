@@ -226,6 +226,16 @@ LinkedListIterator_next(LinkedListIterator *iterator) {
     }
 }
 
+void *
+LinkedListIterator_value(LinkedListIterator *iterator) {
+    if (iterator == NULL || *iterator == NULL) {
+    return NULL;
+    } else {
+    void *data = (*iterator)->data;
+    return data;
+    }
+}
+
 /**
  * Print the given LinkedList to stdout, assuming that the values are
  * all null-terminated strings.

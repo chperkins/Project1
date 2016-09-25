@@ -87,6 +87,8 @@ extern LinkedListIterator *LinkedList_iterator(const LinkedList *list);
  */
 extern bool LinkedListIterator_has_next(const LinkedListIterator *iterator);
 
+
+
 /**
  * Return the next value from the given LinkedListIterator and increment it
  * to point to the next element.
@@ -94,6 +96,8 @@ extern bool LinkedListIterator_has_next(const LinkedListIterator *iterator);
  * This means that you can't store NULL in a LinkedList. C'est la vie.
  */
 extern void *LinkedListIterator_next(LinkedListIterator *iterator);
+
+extern void *LinkedListIterator_value(LinkedListIterator *iterator);
 
 /**
  * Print the given LinkedList to stdout, assuming that the values are
