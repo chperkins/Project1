@@ -9,7 +9,7 @@
 
 CC=gcc
 CFLAGS=-c
-SOURCES=main_file.c nfa.c dfa.c LinkedList.c IntSet.c
+SOURCES=main_file.c nfa.c dfa.c LinkedList.c IntSet.c problem_exec.c nfa_dfa.c
 OBJECTS=$(SOURCES: .c=.o)
 EXECUTABLE=test
 
@@ -33,6 +33,12 @@ LinkedList.o: LinkedList.c
 
 IntSet.o: IntSet.c
 	$(CC) $(CFLAGS) IntSet.c
+
+problem_exec.o: problem_exec.c
+	$(CC) $(CFLAGS) problem_exec.c
+
+nfa_dfa.o: nfa_dfa.c
+	$(CC) $(CFLAGS) nfa_dfa.c
 
 clean: 
 	rm *o $(EXECUTABLE)
