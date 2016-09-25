@@ -108,21 +108,32 @@ int main (int argc, char **argv) {
 	printf("-----------------------------PROBLEM 1----------------------------- \n"); 
 
 	printf("Problem 1 (a) \n");
+    printf("Exactly the string \"ab\" \n");
 	DFA *problem1_a = DFA_new(3);
 	DFA_set_transition(problem1_a, 0, 'a', 1);
 	DFA_set_transition(problem1_a, 1, 'b', 2);
 	DFA_set_accepting(problem1_a, 2, TRUE);
     DFA_print(problem1_a);
+    printf("Test for \"ab\": %d \n", DFA_execute(problem1_a, "ab"));
+    printf("Test for \"cde\": %d \n", DFA_execute(problem1_a, "cde"));
+    printf("Test for \"\": %d \n", DFA_execute(problem1_a, ""));
 
 	printf("\n Problem 1 (b) \n");
+    printf("Any string that starts with the characters \"ab\" \n");
 	DFA *problem1_b = DFA_new(3);
 	DFA_set_transition(problem1_b, 0, 'a', 1);
 	DFA_set_transition(problem1_b, 1, 'b', 2);
 	DFA_set_transition_all(problem1_b, 2, 2);
 	DFA_set_accepting(problem1_b, 2, TRUE);
     DFA_print(problem1_b);
+    printf("Test for \"ab\": %d \n", DFA_execute(problem1_b, "ab"));
+    printf("Test for \"abcd\": %d \n", DFA_execute(problem1_b, "abcd"));
+    printf("Test for \"cde\": %d \n", DFA_execute(problem1_b, "cde"));
+    printf("Test for \"\": %d \n", DFA_execute(problem1_b, ""));
+
 
 	printf("\n Problem 1 (c) \n");
+    printf("Binary input with an even number of 1\'s \n");
 	DFA *problem1_c = DFA_new(2);
 	DFA_set_transition(problem1_c, 0, '1', 1);
 	DFA_set_transition(problem1_c, 1, '1', 0);
@@ -130,8 +141,14 @@ int main (int argc, char **argv) {
 	DFA_set_transition(problem1_c, 1, '0', 1);
 	DFA_set_accepting(problem1_c, 0, TRUE);
     DFA_print(problem1_c);
+    printf("Test for \"11\": %d \n", DFA_execute(problem1_c, "11"));
+    printf("Test for \"1010101011\": %d \n", DFA_execute(problem1_c, "1010101011"));
+    printf("Test for \"\": %d \n", DFA_execute(problem1_c, ""));
+    printf("Test for \"1\": %d \n", DFA_execute(problem1_c, "1"));
+    printf("Test for \"0001011\": %d \n", DFA_execute(problem1_c, "0001011"));
 
 	printf("\n Problem 1 (d) \n");
+    printf("Binary input with an even number of both 0\'s and 1\'s \n");
 	DFA *problem1_d = DFA_new(4);
 	DFA_set_transition(problem1_d, 0, '1', 1);
 	DFA_set_transition(problem1_d, 0, '0', 2);
@@ -143,6 +160,14 @@ int main (int argc, char **argv) {
 	DFA_set_transition(problem1_d, 3, '1', 2);
 	DFA_set_accepting(problem1_d, 0, TRUE);
     DFA_print(problem1_d);
+    printf("Test for \"11\": %d \n", DFA_execute(problem1_d, "11"));
+    printf("Test for \"00\": %d \n", DFA_execute(problem1_d, "00"));
+    printf("Test for \"1010101011\": %d \n", DFA_execute(problem1_d, "1010101011"));
+    printf("Test for \"\": %d \n", DFA_execute(problem1_d, ""));
+    printf("Test for \"1\": %d \n", DFA_execute(problem1_d, "1"));
+    printf("Test for \"100\": %d \n", DFA_execute(problem1_d, "100"));
+    printf("Test for \"101\": %d \n", DFA_execute(problem1_d, "101"));
+    printf("Test for \"0001011\": %d \n", DFA_execute(problem1_d, "0001011"));
 
 	printf("\n Problem 1 (e) \n");
 
@@ -150,15 +175,22 @@ int main (int argc, char **argv) {
 	printf("\n-----------------------------PROBLEM 2----------------------------- \n");
 
 	printf("Problem 2 (a) \n");
+    printf("Strings ending in \"man\" \n");
 	NFA *problem2_a = NFA_new(4);
     NFA_add_transition(problem2_a, 0,'m',1);
     NFA_add_transition(problem2_a, 1,'a',2);
     NFA_add_transition(problem2_a, 2,'n',3);
     NFA_add_transition_all(problem2_a, 0,0);
     NFA_set_accepting(problem2_a, 3, TRUE);
+    printf("Test for \"man\": %d \n", NFA_execute(problem2_a, "man"));
+    printf("Test for \"dczeman\": %d \n", NFA_execute(problem2_a, "dczeman"));
+    printf("Test for \"manmann\": %d \n", NFA_execute(problem2_a, "manmann"));
+    printf("Test for \"jwiefo\": %d \n", NFA_execute(problem2_a, "jwiefo"));
+    printf("Test for \"\": %d \n", NFA_execute(problem2_a, ""));
 
 
-    printf("Problem 2 (b) \n");
+    printf(" \n Problem 2 (b) \n");
+    printf("Strings that contain more than one each of the letters in \"washington\" other than n, or more than two n\'s \n");
 
     NFA *problem2_b = NFA_new(20);
     NFA_add_transition_all(problem2_b, 0, 0);
@@ -220,9 +252,16 @@ int main (int argc, char **argv) {
     NFA_set_accepting(problem2_b, 17, TRUE);
     NFA_set_accepting(problem2_b, 19, TRUE);
 
+    printf("Test for \"washingtonw\": %d \n", NFA_execute(problem2_b, "washingtonw"));
+    printf("Test for \"axyzuioa\": %d \n", NFA_execute(problem2_b, "axyzuioa"));
+    printf("Test for \"nann\": %d \n", NFA_execute(problem2_b, "nann"));
+    printf("Test for \"washington\": %d \n", NFA_execute(problem2_b, "washington"));
+    printf("Test for \"\": %d \n", NFA_execute(problem2_b, ""));
+
     printf("Problem 2 (c) \n");
 
     NFA *problem2_c = NFA_new(9);
+    printf("a\'s, b\'s, and c\'s only, contains \"abc\", \"ba\" or \"bba\" anywhere\n");
     NFA_add_transition_str(problem2_c, 0, "abc", 0);
     NFA_add_transition(problem2_c, 0, 'a', 1);
     NFA_add_transition(problem2_c, 1, 'b', 2);
@@ -239,261 +278,50 @@ int main (int argc, char **argv) {
     NFA_set_accepting(problem2_c, 5, TRUE);
     NFA_set_accepting(problem2_c, 8, TRUE);
 
+    printf("Test for \"abc\": %d \n", NFA_execute(problem2_c, "abc"));
+    printf("Test for \"ba\": %d \n", NFA_execute(problem2_c, "ba"));
+    printf("Test for \"bba\": %d \n", NFA_execute(problem2_c, "bba"));
+    printf("Test for \"cccabcccc\": %d \n", NFA_execute(problem2_c, "cccabcccc"));
+
+    printf("Test for \"aacc\": %d \n", NFA_execute(problem2_c, "aacc"));
+    printf("Test for \"abdddd\": %d \n", NFA_execute(problem2_c, "abdddd"));
+    printf("Test for \"\": %d \n", NFA_execute(problem2_c, ""));
+
 
 	printf("\n-----------------------------PROBLEM 3-----------------------------");
 
+    printf("Conversion of problem 2_a \n");
+    DFA *problem2_a_dfa = NFA_to_DFA(problem2_a);
+    DFA_print(problem2_a_dfa);
+    printf("Test for \"man\": %d \n", DFA_execute(problem2_a_dfa, "man"));
+    printf("Test for \"dczeman\": %d \n", DFA_execute(problem2_a_dfa, "dczeman"));
+    printf("Test for \"manmann\": %d \n", DFA_execute(problem2_a_dfa, "manmann"));
+    printf("Test for \"jwiefo\": %d \n", DFA_execute(problem2_a_dfa, "jwiefo"));
+    printf("Test for \"\": %d \n", DFA_execute(problem2_a_dfa, ""));
 
 
+    /*printf("Conversion of problem 2_b \n");
+    DFA *problem2_b_dfa = NFA_to_DFA(problem2_b);
+    DFA_print(problem2_b_dfa);
+    printf("Test for \"washingtonw\": %d \n", DFA_execute(problem2_b_dfa, "washingtonw"));
+    printf("Test for \"axyzuioa\": %d \n", DFA_execute(problem2_b_dfa, "axyzuioa"));
+    printf("Test for \"nann\": %d \n", DFA_execute(problem2_b_dfa, "nann"));
+    printf("Test for \"washington\": %d \n", DFA_execute(problem2_b_dfa, "washington"));
+    printf("Test for \"\": %d \n", DFA_execute(problem2_b_dfa, ""));*/
+
+    printf("Conversion of problem 2_c \n");
+    DFA *problem2_c_dfa = NFA_to_DFA(problem2_c);
+    DFA_print(problem2_c_dfa);
+    printf("Test for \"abc\": %d \n", DFA_execute(problem2_c_dfa, "abc"));
+    printf("Test for \"ba\": %d \n", DFA_execute(problem2_c_dfa, "ba"));
+    printf("Test for \"bba\": %d \n", DFA_execute(problem2_c_dfa, "bba"));
+    printf("Test for \"cccabcccc\": %d \n", DFA_execute(problem2_c_dfa, "cccabcccc"));
+
+    printf("Test for \"aacc\": %d \n", DFA_execute(problem2_c_dfa, "aacc"));
+    printf("Test for \"abdddd\": %d \n", DFA_execute(problem2_c_dfa, "abdddd"));
+    printf("Test for \"\": %d \n", DFA_execute(problem2_c_dfa, ""));
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//DFA *trial  = DFA_new(3);
-    //printf("trial");
-	/*DFA *trial  = DFA_new(3);
-	DFA_get_size(trial);
-	DFA_set_transition(trial,0,'a',1);
-	printf("%d \n", DFA_get_transition(trial, 0, 'a'));
-	DFA_set_transition_str(trial,0,"bc",2);
-	printf("%d \n", DFA_get_transition(trial, 0, 'b'));
-	DFA_set_current_state(trial,2);
-
-	printf("%d",DFA_get_current_state(trial));
-    
-	printf("%d \n",DFA_get_current_state(trial));
-    DFA_free(trial);
-
-	DFA *problem_1 = DFA_new(3);
-    printf("problem_1 \n");
-	DFA_set_transition(problem_1, 0,'a', 1);
-	DFA_set_transition(problem_1, 1, 'b', 2);
-	DFA_set_accepting(problem_1, 2, TRUE);
-    DFA_free(problem_1);
-
-	DFA *problem_2 = DFA_new(3);
-    printf("problem_2 \n");
-	DFA_set_transition(problem_2, 0,'a', 1);
-	DFA_set_transition(problem_2, 1, 'b', 2);
-	DFA_set_transition_all(problem_2, 2, 2);
-	DFA_set_accepting(problem_2, 2, TRUE);
-	printf("%d \n", DFA_execute(problem_2, "ab"));
-	printf("%d \n", DFA_execute(problem_2, "abc"));
-	printf("%d \n", DFA_execute(problem_2, "xyz"));
-	printf("%d \n", DFA_execute(problem_2, "xyzab"));
-    DFA_free(problem_2);
-
-	DFA *problem_3 = DFA_new(2);
-    printf("problem_3 \n");
-	DFA_set_transition_all(problem_3, 0, 0);
-	DFA_set_transition_all(problem_3, 1, 1);
-	DFA_set_transition(problem_3, 0, '1', 1);
-	DFA_set_transition(problem_3, 1, '1', 0);
-
-	DFA_print(problem_3);
-	DFA_free(problem_3);*/
-
-	   /*NFA *test = NFA_new(5);
-    NFA_add_transition(test, 0, 'a', 1);
-    IntSet_print(NFA_get_transitions(test, 0, 'a'));*/
-
-    printf("NFA p1 \n");
-    NFA *p1 = NFA_new(2);
-    NFA_add_transition_str(p1, 0, "ab", 0);
-    NFA_add_transition_str(p1, 0, "ab", 1);
-    NFA_add_transition_str(p1, 1, "ab", 1);
-    NFA_set_accepting(p1, 1, TRUE);
-    NFA_set_accepting(p1, 0, TRUE);
-    printf("%d \n", NFA_execute(p1, ""));
-    printf("%d \n", NFA_execute(p1, "a"));
-    printf("%d \n", NFA_execute(p1, "ab"));
-    printf("%d \n", NFA_execute(p1, "abc"));
-    printf("%d \n", NFA_execute(p1, "def"));
-    printf("%d \n", NFA_execute(p1, "abbbaabababababa"));
-
-    printf("DFA p1 \n");
-
-    DFA *dfa_p1 = NFA_to_DFA(p1);
-    //DFA_print(dfa_p1);
-    printf("%d \n", DFA_execute(dfa_p1, ""));
-    printf("%d \n", DFA_execute(dfa_p1, "a"));
-    printf("%d \n", DFA_execute(dfa_p1, "ab"));
-    printf("%d \n", DFA_execute(dfa_p1, "abc"));
-    printf("%d \n", DFA_execute(dfa_p1, "def"));
-    printf("%d \n", DFA_execute(dfa_p1, "abbbaabababababa"));
-
-    printf("NFA p2 \n");
-
-    NFA *p2 = NFA_new(4);
-    NFA_add_transition_str(p2, 0, "abc", 0);
-    NFA_add_transition_str(p2, 3, "abc", 3);
-    NFA_add_transition(p2, 0, 'a', 1);
-    NFA_add_transition(p2, 1, 'b', 2);
-    NFA_add_transition(p2, 2, 'c', 3);
-    NFA_set_accepting(p2, 3, TRUE);
-    printf("%d \n", NFA_execute(p2, ""));
-    printf("%d \n", NFA_execute(p2, "abbbb"));
-    printf("%d \n", NFA_execute(p2, "01abc01"));
-    printf("%d \n", NFA_execute(p2, "cccabcaaa"));
-    printf("%d \n", NFA_execute(p2, "abcabcabcabcabc"));
-
-    DFA *p2_dfa = NFA_to_DFA(p2);
-    printf("dfa p2 \n");
-    printf("%d \n", DFA_execute(p2_dfa, ""));
-    printf("%d \n", DFA_execute(p2_dfa, "abbbb"));
-    printf("%d \n", DFA_execute(p2_dfa, "01abc01"));
-    printf("%d \n", DFA_execute(p2_dfa, "cccabcaaa"));
-    printf("%d \n", DFA_execute(p2_dfa, "abcabcabcabcabc"));
-
-    NFA_free(p2);
-
-    /*NFA *p3 = NFA_new(9);
-    NFA_add_transition_str(p3, 0, "abc", 0);
-    NFA_add_transition(p3, 0, 'a', 1);
-    NFA_add_transition(p3, 1, 'b', 2);
-    NFA_add_transition(p3, 2, 'c', 3);
-    NFA_add_transition_str(p3, 3, "abc", 3);
-    NFA_add_transition(p3, 0, 'b', 4);
-    NFA_add_transition(p3, 4, 'a', 5);
-    NFA_add_transition_str(p3, 5, "abc", 5);
-    NFA_add_transition(p3, 0, 'b', 6);
-    NFA_add_transition(p3, 6, 'b', 7);
-    NFA_add_transition(p3, 7, 'a', 8);
-    NFA_add_transition_str(p3, 8, "abc", 8);
-    NFA_set_accepting(p3, 3, TRUE);
-    NFA_set_accepting(p3, 5, TRUE);
-    NFA_set_accepting(p3, 8, TRUE);
-
-    DFA *p3_dfa = NFA_to_DFA(p3);
-    printf("nfa p3 \n");
-    printf("%d \n", NFA_execute(p3, ""));
-    printf("%d \n", NFA_execute(p3, "abbbb"));
-    printf("%d \n", NFA_execute(p3, "01abc01"));
-    printf("%d \n", NFA_execute(p3, "cccabcaaa"));
-    printf("%d \n", NFA_execute(p3, "abcabcabcabcabc"));
-	printf("%d \n", NFA_execute(p3, "ccccbbaccc"));
-
-
-    printf("dfa p3 \n");
-    printf("%d \n", DFA_execute(p3_dfa, ""));
-    printf("%d \n", DFA_execute(p3_dfa, "abbbb"));
-    printf("%d \n", DFA_execute(p3_dfa, "01abc01"));
-    printf("%d \n", DFA_execute(p3_dfa, "cccabcaaa"));
-    printf("%d \n", DFA_execute(p3_dfa, "abcabcabcabcabc"));
-    printf("%d \n", DFA_execute(p3_dfa, "ccccbbaccc"));*/
-
-
-    /*NFA *problem2_b = NFA_new(20);
-    
-    printf("problem2_b \n");
-    NFA_add_transition_all(problem2_b, 0, 0);
-
-    NFA_add_transition(problem2_b, 0, 'a', 1);
-    NFA_add_transition_all(problem2_b, 1, 1);
-    NFA_add_transition(problem2_b, 1, 'a', 2);
-    NFA_add_transition_all(problem2_b, 2, 2);
-
-    NFA_add_transition(problem2_b, 0, 'g', 3);
-    NFA_add_transition_all(problem2_b, 3, 3);
-    NFA_add_transition(problem2_b, 3, 'g', 4);
-    NFA_add_transition_all(problem2_b, 4, 4);
-
-    NFA_add_transition(problem2_b, 0, 'h', 5);
-    NFA_add_transition_all(problem2_b, 5, 5);
-    NFA_add_transition(problem2_b, 5, 'h', 6);
-    NFA_add_transition_all(problem2_b, 6, 6);
-
-    NFA_add_transition(problem2_b, 0, 'i', 7);
-    NFA_add_transition_all(problem2_b, 7, 7);
-    NFA_add_transition(problem2_b, 7, 'i', 8);
-    NFA_add_transition_all(problem2_b, 8, 8);
-
-    NFA_add_transition(problem2_b, 0, 'n', 9);
-    NFA_add_transition_all(problem2_b, 9, 9);
-    NFA_add_transition(problem2_b, 9, 'n', 10);
-    NFA_add_transition_all(problem2_b, 10, 10);
-    NFA_add_transition(problem2_b, 10, 'n', 11);
-    NFA_add_transition_all(problem2_b, 11, 11);
-
-    NFA_add_transition(problem2_b, 0, 'o', 12);
-    NFA_add_transition_all(problem2_b, 12, 12);
-    NFA_add_transition(problem2_b, 12, 'o', 13);
-    NFA_add_transition_all(problem2_b, 13, 13);
-
-    NFA_add_transition(problem2_b, 0, 's', 14);
-    NFA_add_transition_all(problem2_b, 14, 14);
-    NFA_add_transition(problem2_b, 14, 's', 15);
-    NFA_add_transition_all(problem2_b, 15, 15);
-
-    NFA_add_transition(problem2_b, 0, 't', 16);
-    NFA_add_transition_all(problem2_b, 16, 16);
-    NFA_add_transition(problem2_b, 16, 't', 17);
-    NFA_add_transition_all(problem2_b, 17, 17);
-
-    NFA_add_transition(problem2_b, 0, 'w', 18);
-    NFA_add_transition_all(problem2_b, 18, 18);
-    NFA_add_transition(problem2_b, 18, 'w', 19);
-    NFA_add_transition_all(problem2_b, 19, 19);
-
-    NFA_set_accepting(problem2_b, 2, TRUE);
-    NFA_set_accepting(problem2_b, 4, TRUE);
-    NFA_set_accepting(problem2_b, 6, TRUE);
-    NFA_set_accepting(problem2_b, 8, TRUE);
-    NFA_set_accepting(problem2_b, 11, TRUE);
-    NFA_set_accepting(problem2_b, 13, TRUE);
-    NFA_set_accepting(problem2_b, 15, TRUE);
-    NFA_set_accepting(problem2_b, 17, TRUE);
-    NFA_set_accepting(problem2_b, 19, TRUE);
-
-    printf("%d \n", NFA_execute(problem2_b, "washington"));
-
-    DFA *problem2_b1 = NFA_to_DFA(problem2_b);*/
-
-
-    //printf(" DFA NFA TEST %d \n", DFA_execute(dfa_problem2_b, "washington"));*/
-
-
-    /*NFA *problem1 = NFA_new(4);
-    printf("problem1 \n");
-    NFA_add_transition(problem1, 0,'m',1);
-    NFA_add_transition(problem1, 1,'a',2);
-    NFA_add_transition(problem1, 2,'n',3);
-    NFA_add_transition_all(problem1, 0,0);
-    NFA_set_accepting(problem1, 3, TRUE);
-    //printf("%d \n", NFA_execute(problem1, "man"));
-    //printf("%d \n", NFA_execute(problem1, "aewifasdciuandvx"));
-    //printf("%d \n", NFA_execute(problem1, "amanb"));
-    //printf("%d \n", NFA_execute(problem1, "manabc"));
-    //printf("%d \n", NFA_execute(problem1, "defman"));*/
-  
-
-    /*DFA *dfa_test = NFA_to_DFA(problem1);
-    printf("dfa_test \n");
-    //DFA_print(dfa_test);
-    printf("DFA STUFF \n%d \n", DFA_execute(dfa_test, "man"));
-    printf("%d \n", DFA_execute(dfa_test, "aewifasdciuandvx"));
-    printf("%d \n", DFA_execute(dfa_test, "amanb"));
-    printf("%d \n", DFA_execute(dfa_test, "manabc"));
-    printf("%d \n", DFA_execute(dfa_test, "defman"));
-    DFA_free(dfa_test);
-    NFA_free(problem1);*/
-
-
-    //printf("%d \n", DFA_execute(dfa_test, "manmanman"));
-    //printf("%d \n", DFA_execute(dfa_test, "manmanman1"));
-
-
-    //DFA_free(dfa_test);*/
 
 	return 0;
 }
