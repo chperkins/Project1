@@ -15,3 +15,6 @@ extern NFA *contain_abc_ba_bba ();
 extern DFA *end_in_man_dfa (NFA *problem2_a);
 extern DFA *washington_dfa(NFA *problem2_b);
 extern DFA *contain_abc_ba_bba_dfa (NFA *problem2_c);
+
+extern DFA *contain_moo();
+extern NFA *contain_loo_NFA();
