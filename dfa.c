@@ -87,71 +87,69 @@ void DFA_free(DFA *dfa){
 
 void DFA_print(DFA *dfa){
 	/* Print the DFA in the format
-	 * Node: origin_node | symbol, dest_node |
-	 * If there is a transition all 
+	 * Node origin_node: |symbol, dest_node|
+	 * If there is a transition all, output is |all -excluded_sym, dest_node|
 	 */
 
+	/* Iterate through each state in the DFA, checking if it has a transition and to what state.*/
 	for(int i=0; i < DFA_get_size(dfa); i++){
-		printf("\nNode %d: ", i);
+		printf("\nStart State %d: ", i);
 
-
+		/* Create an array to count how many transitions there are from current state to every other state*/
 		int trans_all[DFA_get_size(dfa)];
-
 		for(int k=0; k < DFA_get_size(dfa); k++){
-			trans_all[k] = 0;	
+			trans_all[k] = 0;//Initialize array
 		}
 
-		//Check if there are >128 transitions
+		//For each transition from current state, increment the array at the index of the destination state
 		for(int x =32; x < 128; x++){
-			int dest = dfa->states[i].transitions[x];
+			int dest = dfa->states[i].transitions[x]; //Get the destination of the transition from current state
 			if(dest != -1){
 				trans_all[dest] += 1;
 			}
 		}
+		/* Now that we have an array filled with the count of transitions from curr state through possible destinations */
+		for(int z =0; z < DFA_get_size(dfa); z++){
 
-		if(trans_all[i] >= 96){
-				printf("|all,%d|", i);
-		}
+			if(trans_all[z] >= 96){ //If there are 96 transitions, it is a transition all
+					printf("|all, %d|", z);
+			}
 
-		if(trans_all[i] >88 && trans_all[i] <96){
-			int dest_all = dfa->states[i].transitions[0];
-			int diff_dest[] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
-			int diff_count = 0;
+			if(trans_all[z] >88 && trans_all[z] <96){//In this case only a few transitions are different from the rest, so we do |all -x -y ...|
+				int dest_all = dfa->states[i].transitions[0];
+				int diff_dest[] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+				int diff_count = 0;
 
-			printf("|all ");
+				printf("|all ");
 
-			for(int x=32; x <128; x++){
-				int dest = dfa->states[i].transitions[x];
-				if(dest != dest_all){
-					printf("-%c ", x);
-					diff_dest[diff_count] = dest;
-					diff_dest[diff_count+1] = x;
-					diff_count +=2;
+				for(int x=32; x <128; x++){
+					int dest = dfa->states[i].transitions[x];
+					if(dest != dest_all){
+						printf("-%c ", x);
+						diff_dest[diff_count] = dest;
+						diff_dest[diff_count+1] = x;
+						diff_count +=2;
+					}
+				}
+				printf("|\t");
+
+				for(int x=0; x<15; x+=2){
+					if(diff_dest[x] != -1){
+						//printf("|%c,%d|", diff_dest[x+1], diff_dest[x]);
+					}
 				}
 			}
-			printf("|\t");
-
-			for(int x=0; x<15; x+=2){
-				if(diff_dest[x] != -1){
-					printf("|%c,%d|", diff_dest[x+1], diff_dest[x]);
-				}
-			}
 		}
 
-		else{
-			for (int j = 32; j < DFA_NSYMBOLS; j++){
+		
+		for (int j = 32; j < DFA_NSYMBOLS; j++){
 
-				int node = dfa->states[i].transitions[j];
+			int dest = dfa->states[i].transitions[j];
 
-				if(node != -1 && trans_all[node] <96){
-					//printf("|%c,%d|", j, node);
-				}
-							
-			}	
+			if(dest != -1 && trans_all[dest] <88){
+				printf("|%c,%d|", j, dest);
+			}							
 		}
-
-		printf("Number of transitions in Node %d: %d\n", i, trans_all[i] );
-
 	}
 		
 	printf("\n");
