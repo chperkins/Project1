@@ -1,24 +1,38 @@
-CC=gcc
+# 
+# File: Makefile
+# Makefile compiles and runs project
+# For different compilier change var CC
+# To change name of executable change var EXECUTABLE
+#
+# Made following tutorial from http://mrbook.org/blog/tutorials/make/
+#
 
-all: test
+CC=gcc
+CFLAGS=-c
+SOURCES=main_file.c nfa.c dfa.c LinkedList.c IntSet.c
+OBJECTS=$(SOURCES: .c=.o)
+EXECUTABLE=test
+
+all: $(EXECUTABLE)
+	./$(EXECUTABLE)
 	
-test: main_file.o nfa.o dfa.o LinkedList.o IntSet.o 
-	$(CC) main_file.o nfa.o dfa.o LinkedList.o IntSet.o -o test
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(OBJECTS) -o $(EXECUTABLE)
 
 main_file.o: main_file.c
-	$(CC) -c main_file.c
+	$(CC) $(CFLAGS) main_file.c
 
 nfa.o: nfa.c
-	$(CC) -c nfa.c
+	$(CC) $(CFLAGS) nfa.c
 
 dfa.o: dfa.c
-	$(CC) -c dfa.c
+	$(CC) $(CFLAGS) dfa.c
 
 LinkedList.o: LinkedList.c
-	$(CC) -c LinkedList.c
+	$(CC) $(CFLAGS) LinkedList.c
 
 IntSet.o: IntSet.c
-	$(CC) -c IntSet.c
+	$(CC) $(CFLAGS) IntSet.c
 
 clean: 
-	rm *o test
+	rm *o $(EXECUTABLE)
