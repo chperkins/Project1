@@ -255,6 +255,8 @@ DFA *contain_abc_ba_bba_dfa (NFA *problem2_c) {
 }
 
 DFA *contain_moo() {
+    printf("\n Problem 1 (e) \n");
+    printf("Contain \"moo\" \n");
     DFA *moo_DFA = DFA_new(4);
     DFA_set_transition_all(moo_DFA, 0, 0);
     DFA_set_transition_all(moo_DFA, 1, 0);
@@ -262,10 +264,18 @@ DFA *contain_moo() {
     DFA_set_transition_all(moo_DFA, 3, 3);
     DFA_set_transition(moo_DFA, 0, 'm', 1);
     DFA_set_transition(moo_DFA, 1, 'm', 1);
-    DFA_set_transition(moo_DFA, 1, '0', 2);
+    DFA_set_transition(moo_DFA, 1, 'o', 2);
     DFA_set_transition(moo_DFA, 2, 'm', 1);
     DFA_set_transition(moo_DFA, 2, 'o', 3);
     DFA_set_accepting(moo_DFA, 3, TRUE);
+
+    printf("Test for \"moo\": %d \n", DFA_execute(moo_DFA, "moo"));
+    printf("Test for \"abmoodxsfa\": %d \n", DFA_execute(moo_DFA, "abmoodxsfa"));
+    printf("Test for \"\": %d \n", DFA_execute(moo_DFA, ""));
+    printf("Test for \"mo\": %d \n", DFA_execute(moo_DFA, "mo"));
+    printf("Test for \"momo\": %d \n", DFA_execute(moo_DFA, "momo"));
+    printf("Test for \"abc\": %d \n", DFA_execute(moo_DFA, "abc"));
+
 
     return moo_DFA;
 }

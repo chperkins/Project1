@@ -31,19 +31,19 @@ DFA *NFA_to_DFA(NFA *nfa) {
 	//printf("ok3 \n");
 
 	int num_states=1;
-	LinkedListIterator *listIterate = LinkedList_iterator(states);
-	LinkedListIterator *isIterate = LinkedList_iterator(intsets);
+	LinkedListIterator *listIterate = LinkedList_iterator(states); //creates iterator for dfa states
+	LinkedListIterator *isIterate = LinkedList_iterator(intsets); //creates iterator for intsets of nfa states
 
-	while(LinkedListIterator_has_next(listIterate)) {
+	while(LinkedListIterator_has_next(listIterate)) { //checks if there is another dfa states
 		//printf("%d number of states \n", num_states);
-		DFA_State *currentState = LinkedListIterator_value(listIterate);
+		DFA_State *currentState = LinkedListIterator_value(listIterate); //takes current value but doesn't iterate
 		IntSet *currentIS = LinkedListIterator_value(isIterate);
-		for(int sym=0; sym<NFA_NSYMBOLS; sym++) {
-			IntSet *dst = IntSet_new();
-			IntSetIterator *current_s_iterator = IntSet_iterator(currentIS);
-			while(IntSetIterator_has_next(current_s_iterator)) {
+		for(int sym=0; sym<NFA_NSYMBOLS; sym++) { //goes through each symbol
+			IntSet *dst = IntSet_new(); //creates an intset to gather all destinations on sym
+			IntSetIterator *current_s_iterator = IntSet_iterator(currentIS); //iterates through each current state of nfa
+			while(IntSetIterator_has_next(current_s_iterator)) { //checks for another state in nfa
 				int tempState = IntSetIterator_next(current_s_iterator);
-				IntSet_union(dst, nfa->states[tempState].transitions[sym]);
+				IntSet_union(dst, nfa->states[tempState].transitions[sym]); //unions destinations to dst
 
 				if(nfa->states[tempState].is_accepting) {
 					currentState->is_accepting = TRUE; //if any state in the nfa is accepting, then states[i] should be too
@@ -54,14 +54,14 @@ DFA *NFA_to_DFA(NFA *nfa) {
 			//printf("%c", sym);
 			//IntSet_print(dst);
 
-			int containInt = -1;
+			int containInt = -1; //tracks whether dst is new or not
 			int iterint = 0;
 			LinkedListIterator *tempIterate = LinkedList_iterator(intsets);
 			while(LinkedListIterator_has_next(tempIterate)) {
 				IntSet *tempIntSet = LinkedListIterator_next(tempIterate);
 				if(IntSet_equals(tempIntSet, dst)) {
 					containInt=iterint;
-				}
+				} //this is required since linked_list_contains doesn't work the same
 				iterint++;
 			}
 			free(tempIterate);
@@ -76,14 +76,14 @@ DFA *NFA_to_DFA(NFA *nfa) {
 				LinkedList_add_at_end(states, state_k);
 				LinkedList_add_at_end(intsets, dst);
 				num_states+=1;
-			}
+			}//if dst is new, we add it as a new dfa state
 
 			else if(!(IntSet_is_empty(dst))) {
 				currentState->transitions[sym]=containInt;
-			}
+			}//if not, we just set the current state to have the old state as a transition
 		}
 		DFA_State *nextState = LinkedListIterator_next(listIterate);
-		IntSet *next = LinkedListIterator_next(isIterate);
+		IntSet *next = LinkedListIterator_next(isIterate); //iterates through stuff
 	}
 
 	DFA *new_DFA = DFA_new(num_states); //generates dfa
@@ -94,7 +94,7 @@ DFA *NFA_to_DFA(NFA *nfa) {
 		free(oneState);
 	}
 
-	free(finalStates);
+	free(finalStates); //frees stuff
 	free(listIterate);
 	free(isIterate);
 	return new_DFA;

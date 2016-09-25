@@ -19,15 +19,12 @@ int main (int argc, char **argv) {
 	DFA *problem1_b = start_ab();
 
 	DFA *problem1_c = even_num_1();
-
 	
 	DFA *problem1_d = even_num_01 ();
 
-	printf("\n Problem 1 (e) \n");
-
+    DFA *problem1_e = contain_moo();
 
 	NFA *problem2_a = end_in_man();
-
 
     NFA *problem2_b = washington();
 
