@@ -93,7 +93,7 @@ void DFA_print(DFA *dfa){
 
 	/* Iterate through each state in the DFA, checking if it has a transition and to what state.*/
 	for(int i=0; i < DFA_get_size(dfa); i++){
-		printf("\nStart State %d: ", i);
+		printf("\nState %d: ", i);
 
 		/* Create an array to count how many transitions there are from current state to every other state*/
 		int trans_all[DFA_get_size(dfa)];

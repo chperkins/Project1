@@ -41,4 +41,4 @@ nfa_dfa.o: nfa_dfa.c
 	$(CC) $(CFLAGS) nfa_dfa.c
 
 clean: 
-	rm *o $(EXECUTABLE)
+	rm  $(EXECUTABLE)
