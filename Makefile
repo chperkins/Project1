@@ -8,7 +8,7 @@
 #
 
 CC=gcc
-CFLAGS=-c
+CFLAGS=
 SOURCES=main_file.c nfa.c dfa.c LinkedList.c IntSet.c problem_exec.c nfa_dfa.c
 OBJECTS=$(SOURCES: .c=.o)
 EXECUTABLE=test
