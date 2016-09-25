@@ -268,8 +268,8 @@ DFA *contain_moo() {
     DFA_set_accepting(moo_DFA, 3, TRUE);
 
     return moo_DFA;
-
 }
+
 
 NFA *contain_loo_NFA() {
 
