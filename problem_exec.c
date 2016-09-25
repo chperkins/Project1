@@ -212,7 +212,7 @@ NFA *contain_abc_ba_bba () {
  }
 
 DFA *end_in_man_dfa (NFA *problem2_a) {
- 	printf("\n-----------------------------PROBLEM 3-----------------------------");
+ 	printf("\n-----------------------------PROBLEM 3----------------------------- \n");
 
     printf("Conversion of problem 2_a \n");
     DFA *problem2_a_dfa = NFA_to_DFA(problem2_a);
