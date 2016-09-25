@@ -111,14 +111,16 @@ LinkedList_add_at_end(LinkedList *list, void *data) {
 /**
  * Return true if then given LinkedList contains given void* value.
  */
-bool
+int
 LinkedList_contains(const LinkedList *list, void *data) {
+    int i=0;
     for (LinkedListNode *node=list->first; node != NULL; node=node->next) {
-	if (node->data == data) {
-	    return true;
-	}
+        i++;
+	   if (node->data == data) {
+	       return i;
+	   }
     }
-    return false;
+    return -1;
 }
 
 /**

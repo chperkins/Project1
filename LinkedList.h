@@ -45,7 +45,7 @@ extern void LinkedList_add_at_end(LinkedList *list, void *value);
 /**
  * Return true if then given LinkedList contains given void* value.
  */
-extern bool LinkedList_contains(const LinkedList *list, void *value);
+extern int LinkedList_contains(const LinkedList *list, void *value);
 
 /**
  * Remove the given void* value from the given LinkedList if it is there.
