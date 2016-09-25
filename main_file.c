@@ -223,7 +223,7 @@ int main (int argc, char **argv) {
     printf("%d \n", NFA_execute(p3, "01abc01"));
     printf("%d \n", NFA_execute(p3, "cccabcaaa"));
     printf("%d \n", NFA_execute(p3, "abcabcabcabcabc"));
-
+	printf("%d \n", NFA_execute(p3, "ccccbbaccc"));
 
 
     printf("dfa p3 \n");
@@ -232,6 +232,7 @@ int main (int argc, char **argv) {
     printf("%d \n", DFA_execute(p3_dfa, "01abc01"));
     printf("%d \n", DFA_execute(p3_dfa, "cccabcaaa"));
     printf("%d \n", DFA_execute(p3_dfa, "abcabcabcabcabc"));
+    printf("%d \n", DFA_execute(p3_dfa, "ccccbbaccc"));
 
 
     /*NFA *wston = NFA_new(20);
